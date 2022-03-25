@@ -20,12 +20,6 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
-# PyDev specific (Python IDE for Eclipse)
-*.pydevproject
-
-# CDT-specific (C/C++ Development Tooling)
-.cproject
-
 # CDT- autotools
 .autotools
 
@@ -44,9 +38,6 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
-# STS (Spring Tool Suite)
-.springBeans
-
 # Code Recommenders
 .recommenders/
 
@@ -64,8 +55,6 @@ local.properties
 #.project
 
 ### Eclipse Patch ###
-# Spring Boot Tooling
-.sts4-cache/
 
 ### Java ###
 # Compiled class file
