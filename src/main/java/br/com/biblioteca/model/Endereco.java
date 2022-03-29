@@ -9,7 +9,10 @@ public class Endereco {
 	private Long numero;
 	private String bairro;
 	private String cidade;
-	private String CEP;
+	private String cep;
+	
+	public Endereco() {
+	}
 	
 	public String getRua() {
 		return rua;
@@ -35,12 +38,16 @@ public class Endereco {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	public String getCEP() {
-		return CEP;
+	public String getCep() {
+		return cep;
 	}
-	public void setCEP(String CEP) {
-		this.CEP = CEP;
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Endereco [rua=" + rua + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade + ", cep="
+				+ cep + "]";
+	}
 }
