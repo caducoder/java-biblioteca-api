@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 
 @Entity
-public class Biliotecario extends Usuario {
+public class Bibliotecario extends Usuario {
 
 	private String senha;
 	private BigDecimal salario;
