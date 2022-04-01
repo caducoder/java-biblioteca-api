@@ -2,6 +2,7 @@ package br.com.biblioteca.controller;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -49,5 +50,12 @@ public class ClienteController {
 		}
 		
 		return Response.ok(cl).build();
+	}
+	
+	@DELETE
+	@Path("{id}")
+	public Response removerCliente(@PathParam("id") Long id) {
+		clienteService.remover(id);
+		return Response.ok().build();
 	}
 }

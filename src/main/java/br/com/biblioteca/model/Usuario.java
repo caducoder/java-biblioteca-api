@@ -25,6 +25,7 @@ public class Usuario {
 	private String rg;
 	@Embedded
 	private Endereco endereco;
+	@NotNull
 	private String email;
 	private String telefone;
 	

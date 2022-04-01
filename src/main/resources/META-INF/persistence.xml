@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <persistence>
-	<persistence-unit name="postgresDS">
-		<jta-data-source>java:/postgresDS</jta-data-source>
+	<persistence-unit name="PostgresDS">
+		<jta-data-source>java:/PostgresDS</jta-data-source>
+		<properties>
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true"/>
+		</properties>
 	</persistence-unit>
 </persistence>

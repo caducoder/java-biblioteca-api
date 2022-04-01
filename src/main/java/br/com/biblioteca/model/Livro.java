@@ -2,11 +2,12 @@ package br.com.biblioteca.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.biblioteca.utils.EstadoLivro;
@@ -24,16 +25,28 @@ public class Livro {
 	private String doi;
 	private String autor;
 	private String titulo;
+	@Enumerated(EnumType.STRING)
 	private Idioma idioma;
 	private String descricao;
-	private int numeroDePaginas;
+	@Column(name="numero_paginas")
+	private int numeroDePaginas = 50;
+	@Column(name="ano_edicao")
 	private int anoEdicao;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "estado_livro")
-	private EstadoLivro estadoLivro;
+	private EstadoLivro estadoLivro = EstadoLivro.DISPONIVEL;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Cliente cliente_id;
+	@OneToOne(mappedBy = "livro")
+	private Emprestimo emprestimo;
+
+	public Emprestimo getEmprestimo() {
+		return emprestimo;
+	}
+
+	public void setEmprestimo(Emprestimo emprestimo) {
+		this.emprestimo = emprestimo;
+	}
 
 	public Long getId() {
 		return id;
@@ -122,5 +135,12 @@ public class Livro {
 	public void setDoi(String doi) {
 		this.doi = doi;
 	}
+
+	@Override
+	public String toString() {
+		return "Livro [autor=" + autor + ", titulo=" + titulo + ", idioma=" + idioma + ", numeroDePaginas="
+				+ numeroDePaginas + ", anoEdicao=" + anoEdicao + ", estadoLivro=" + estadoLivro + "]";
+	}
+	
 	
 }

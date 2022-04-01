@@ -33,4 +33,9 @@ public class ClienteDAO {
 		}
 		return cl;
 	}
+
+	public void remover(Long id) {
+		Cliente cl = em.find(Cliente.class, id);
+		em.remove(cl);
+	}
 }

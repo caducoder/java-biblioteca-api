@@ -15,7 +15,6 @@ public class ClienteService {
 	private ClienteDAO dao;
 	
 	public void cadastrarCliente(Cliente cliente) {
-		System.out.println("Cheguei no ClienteService");
 		dao.cadastrar(cliente);
 	}
 	
@@ -26,11 +25,12 @@ public class ClienteService {
 	public Cliente buscarPorCpf(String cpf) {
 		return dao.buscarPorCpf(cpf);
 	}
+
+	public void remover(Long id) {
+		dao.remover(id);
+		
+	}
 	
-//	public void remover(Long id) {
-//		dao.remover(id);
-//	}
-//	
 //	public Cliente buscarPorId(Long id) {
 //		return dao.buscarPorId(id);
 //	}
