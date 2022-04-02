@@ -1,6 +1,8 @@
 package br.com.biblioteca.model;
 
 import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,77 +15,65 @@ public class Movimentacao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_movimentacao;
-	private Long id_usuario;
-	private Long id_cliente;
-	private String isbn;
-	private String issn;
-	private String doi;
-	private String tipo_movimentacao;
-	private LocalDateTime data;
-	private LocalDateTime hora;
+	private Long id;
+	
+	@Column(name = "id_usuario")
+	private Long idUsuario;
+	
+	@Column(name = "id_cliente")
+	private Long idCliente;
+	
+	@Column(name = "id_livro")
+	private Long idLivro;
+	
+	@Column(name = "tipo_movimentacao")
+	private String tipoMovimentacao;
+	
+	@Column(name = "data_hora")
+	private LocalDateTime dataHora;
 	
 	
-	public Long getId_usuario() {
-		return id_usuario;
+	public Long getIdUsuario() {
+		return idUsuario;
 	}
-	public void setId_usuario(Long id_usuario) {
-		this.id_usuario = id_usuario;
-	}
-	
-	public Long getId_cliente() {
-		return id_cliente;
-	}
-	public void setId_cliente(Long id_cliente) {
-		this.id_cliente = id_cliente;
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 	
-	public Long getId_movimentacao() {
-		return id_movimentacao;
+	public Long getIdCliente() {
+		return idCliente;
 	}
-	public void setId_movimentacao(Long id_movimentacao) {
-		this.id_movimentacao = id_movimentacao;
-	}
-	
-	public String getIsbn() {
-		return isbn;
-	}
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
 	}
 	
-	public String getIssn() {
-		return issn;
+	public Long getId() {
+		return id;
 	}
-	public void setIssn(String issn) {
-		this.issn = issn;
-	}
-	
-	public String getDoi() {
-		return doi;
-	}
-	public void setDoi(String doi) {
-		this.doi = doi;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
-	public String getTipo_movimentacao() {
-		return tipo_movimentacao;
+	public Long getIdLivro() {
+		return idLivro;
 	}
-	public void setTipo_movimentacao(String tipo_movimentacao) {
-		this.tipo_movimentacao = tipo_movimentacao;
-	}
-	
-	public LocalDateTime getData() {
-		return data;
-	}
-	public void setData(LocalDateTime data) {
-		this.data = data;
+	public void setIdLivro(Long idLivro) {
+		this.idLivro = idLivro;
 	}
 	
-	public LocalDateTime getHora() {
-		return hora;
+	public String getTipoMovimentacao() {
+		return tipoMovimentacao;
 	}
-	public void setHora(LocalDateTime hora) {
-		this.hora = hora;
+	public void setTipoMovimentacao(String tipoMovimentacao) {
+		this.tipoMovimentacao = tipoMovimentacao;
 	}
+	
+	public LocalDateTime getDataHora() {
+		return dataHora;
+	}
+	public void setDataHora(LocalDateTime dataHora) {
+		this.dataHora = dataHora;
+	}
+	
+	
 }

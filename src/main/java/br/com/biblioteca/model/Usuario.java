@@ -50,11 +50,11 @@ public class Usuario {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public String getRG() {
+	public String getRg() {
 		return rg;
 	}
-	public void setRG(String RG) {
-		this.rg = RG;
+	public void setRg(String rg) {
+		this.rg = rg;
 	}
 	public Endereco getEndereco() {
 		return endereco;
@@ -74,4 +74,11 @@ public class Usuario {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [nome=" + nome + ", cpf=" + cpf + ", rg=" + rg + ", endereco=" + endereco + ", email=" + email
+				+ ", telefone=" + telefone + "]";
+	}
+	
 }

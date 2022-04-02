@@ -15,6 +15,7 @@ public class ClienteService {
 	private ClienteDAO dao;
 	
 	public void cadastrarCliente(Cliente cliente) {
+		System.out.println(cliente);
 		dao.cadastrar(cliente);
 	}
 	
