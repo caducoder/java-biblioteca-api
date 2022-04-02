@@ -1,20 +1,27 @@
 package br.com.biblioteca.model;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "movimentacoes")
 public class Movimentacao {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id_movimentacao;
 	private Long id_usuario;
 	private Long id_cliente;
 	private String isbn;
 	private String issn;
 	private String doi;
 	private String tipo_movimentacao;
-	private Date data;
-	private Time hora; //fiquei em dúvida em relação a essa declaração (ainda não tem get e set)
+	private LocalDateTime data;
+	private LocalDateTime hora;
 	
 	
 	public Long getId_usuario() {
@@ -29,6 +36,13 @@ public class Movimentacao {
 	}
 	public void setId_cliente(Long id_cliente) {
 		this.id_cliente = id_cliente;
+	}
+	
+	public Long getId_movimentacao() {
+		return id_movimentacao;
+	}
+	public void setId_movimentacao(Long id_movimentacao) {
+		this.id_movimentacao = id_movimentacao;
 	}
 	
 	public String getIsbn() {
@@ -59,10 +73,17 @@ public class Movimentacao {
 		this.tipo_movimentacao = tipo_movimentacao;
 	}
 	
-	public Date getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
+	}
+	
+	public LocalDateTime getHora() {
+		return hora;
+	}
+	public void setHora(LocalDateTime hora) {
+		this.hora = hora;
 	}
 }
