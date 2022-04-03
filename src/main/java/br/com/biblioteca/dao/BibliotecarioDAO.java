@@ -24,7 +24,7 @@ public class BibliotecarioDAO {
 	}
 	
 	public Bibliotecario buscarPorCpf(String cpfbi) {
-		String jpql = "SELECT b FROM Cliente b WHERE cpf=:cpf";
+		String jpql = "SELECT b FROM Bibliotecario b WHERE cpf=:cpf";
 		Bibliotecario bi = null;
 		try {
 			bi = em.createQuery(jpql, Bibliotecario.class).setParameter("cpf", cpfbi).getSingleResult();

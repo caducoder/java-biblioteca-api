@@ -31,11 +31,16 @@ public class ClienteDAO {
 		} catch (RuntimeException e) {
 			return null;
 		}
+		System.out.println(cl);
 		return cl;
 	}
 
 	public void remover(Long id) {
 		Cliente cl = em.find(Cliente.class, id);
 		em.remove(cl);
+	}
+
+	public Cliente buscarPorId(Long id) {
+		return em.find(Cliente.class, id);
 	}
 }

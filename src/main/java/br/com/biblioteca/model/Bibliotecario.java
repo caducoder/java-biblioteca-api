@@ -10,6 +10,9 @@ public class Bibliotecario extends Usuario {
 	private String senha;
 	private BigDecimal salario;
 	
+	public Bibliotecario() {		
+	}
+	
 	public String getSenha() {
 		return senha;
 	}

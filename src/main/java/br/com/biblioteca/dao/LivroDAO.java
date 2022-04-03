@@ -22,5 +22,14 @@ public class LivroDAO {
 		String jpql = "SELECT l FROM Livro l";
 		return em.createQuery(jpql, Livro.class).getResultList();
 	}
+
+	public Livro buscarLivroPorIsbn(String isbnL) {
+		String jpql = "SELECT l FROM Livro l WHERE isbn=:isbn";
+		
+		return em.createQuery(jpql, Livro.class)
+				.setParameter("isbn", isbnL)
+				.getSingleResult();
+		
+	}
 	
 }

@@ -21,4 +21,8 @@ public class LivroService {
 	public List<Livro> listar() {
 		return dao.listar();
 	}
+	
+	public Livro buscarLivroPorIsbn(String isbn) {
+		return dao.buscarLivroPorIsbn(isbn);
+	}
 }

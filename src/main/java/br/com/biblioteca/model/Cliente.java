@@ -7,8 +7,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -17,6 +18,7 @@ public class Cliente extends Usuario {
 	public Cliente() {
 	}
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
 	private List<Emprestimo> emprestimos = new ArrayList<Emprestimo>();
 	

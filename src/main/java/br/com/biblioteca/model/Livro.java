@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.biblioteca.utils.EstadoLivro;
 import br.com.biblioteca.utils.Idioma;
 
@@ -38,6 +40,7 @@ public class Livro {
 	private EstadoLivro estadoLivro = EstadoLivro.DISPONIVEL;
 	
 	@OneToOne(mappedBy = "livro")
+	@JsonIgnore
 	private Emprestimo emprestimo;
 
 	public Emprestimo getEmprestimo() {

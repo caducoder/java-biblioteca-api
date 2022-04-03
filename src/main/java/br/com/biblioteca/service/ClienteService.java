@@ -32,7 +32,7 @@ public class ClienteService {
 		
 	}
 	
-//	public Cliente buscarPorId(Long id) {
-//		return dao.buscarPorId(id);
-//	}
+	public Cliente buscarPorId(Long id) {
+		return dao.buscarPorId(id);
+	}
 }
