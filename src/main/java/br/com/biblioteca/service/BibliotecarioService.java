@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import br.com.biblioteca.dao.BibliotecarioDAO;
 import br.com.biblioteca.model.Bibliotecario;
+import br.com.biblioteca.utils.CryptUtil;
 
 @Stateless
 public class BibliotecarioService {
@@ -15,7 +16,7 @@ public class BibliotecarioService {
 	private BibliotecarioDAO dao;
 	
 	public void cadastrarBibliotecario(Bibliotecario bibliotecario) {
-		System.out.println(bibliotecario);
+		bibliotecario.setSenha(CryptUtil.criptografarSenha(bibliotecario.getSenha()));
 		dao.cadastrar(bibliotecario);
 	}
 	
@@ -29,10 +30,6 @@ public class BibliotecarioService {
 
 	public void remover(Long id) {
 		dao.remover(id);
-		
 	}
 	
-//	public Cliente buscarPorId(Long id) {
-//	return dao.buscarPorId(id);
-//}
 }

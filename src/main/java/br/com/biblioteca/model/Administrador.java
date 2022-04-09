@@ -10,6 +10,9 @@ public class Administrador extends Usuario {
 	private String senha;
 	private BigDecimal salario;
 	
+	public Administrador() {
+	}
+	
 	public String getSenha() {
 		return senha;
 	}
