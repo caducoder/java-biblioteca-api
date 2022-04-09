@@ -31,5 +31,27 @@ public class LivroDAO {
 				.getSingleResult();
 		
 	}
+
+	public void alterar(Livro nLivro) {
+		Livro oldLivro = em.find(Livro.class, nLivro.getId());
+		System.out.println(oldLivro);
+		
+		oldLivro.setIsbn(nLivro.getIsbn());
+		oldLivro.setIssn(nLivro.getIssn());
+		oldLivro.setDoi(nLivro.getDoi());
+		oldLivro.setAutor(nLivro.getAutor());
+		oldLivro.setTitulo(nLivro.getTitulo());
+		oldLivro.setIdioma(nLivro.getIdioma());
+		oldLivro.setDescricao(nLivro.getDescricao());
+		oldLivro.setNumeroDePaginas(nLivro.getNumeroDePaginas());
+		oldLivro.setAnoEdicao(nLivro.getAnoEdicao());
+		
+		em.merge(oldLivro);
+	}
+
+	public void remover(Long idLivro) {
+		Livro lvr = em.find(Livro.class, idLivro);
+		em.remove(lvr);
+	}
 	
 }

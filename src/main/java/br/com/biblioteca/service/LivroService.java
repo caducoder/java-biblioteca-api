@@ -25,4 +25,12 @@ public class LivroService {
 	public Livro buscarLivroPorIsbn(String isbn) {
 		return dao.buscarLivroPorIsbn(isbn);
 	}
+
+	public void alterar(Livro nLivro) {
+		dao.alterar(nLivro);
+	}
+
+	public void remover(Long idLivro) {
+		dao.remover(idLivro);
+	}
 }
