@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.biblioteca.Authorize;
 import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.service.ClienteService;
 
@@ -21,6 +22,7 @@ public class ClienteController {
 	private ClienteService clienteService;
 	
 	@POST
+	@Authorize
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response cadastrarCliente(Cliente cliente) {
 		try {
@@ -28,19 +30,20 @@ public class ClienteController {
 			return Response.status(201).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			//System.out.println(e.getMessage());
 		}
 		
 		return Response.status(400).build();
 	}
 	
 	@GET
+	@Authorize
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listarClientes() {
 		return Response.ok(clienteService.listarClientes()).build();
 	}
 	
 	@GET
+	@Authorize
 	@Path("{cpf}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorCpf(@PathParam("cpf") String cpf) {
@@ -53,6 +56,7 @@ public class ClienteController {
 	}
 	
 	@DELETE
+	@Authorize
 	@Path("{id}")
 	public Response removerCliente(@PathParam("id") Long id) {
 		clienteService.remover(id);

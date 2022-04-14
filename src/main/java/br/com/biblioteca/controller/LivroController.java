@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.biblioteca.Authorize;
 import br.com.biblioteca.model.Livro;
 import br.com.biblioteca.service.LivroService;
 
@@ -22,6 +23,7 @@ public class LivroController {
 	private LivroService livroService;
 
 	@POST
+	@Authorize
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response cadastrarLivro(Livro livro) {
 		livroService.cadastrar(livro);
@@ -35,6 +37,7 @@ public class LivroController {
 	}
 	
 	@PUT
+	@Authorize
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response alterarLivro(Livro nLivro) {
 		livroService.alterar(nLivro);
@@ -42,6 +45,7 @@ public class LivroController {
 	}
 	
 	@DELETE
+	@Authorize
 	@Path("{idLivro}")
 	public Response removerLivro(@PathParam("idLivro") Long idLivro) {
 		livroService.remover(idLivro);

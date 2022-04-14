@@ -38,4 +38,11 @@ public class BibliotecarioDAO {
 		Bibliotecario bi = em.find(Bibliotecario.class, id);
 		em.remove(bi);
 	}
+	
+	public Bibliotecario buscarBiblioLogin(String emailEnv) {
+		String jpql = "SELECT b FROM Bibliotecario b WHERE email=:email";
+		return em.createQuery(jpql, Bibliotecario.class)
+				.setParameter("email", emailEnv)
+				.getSingleResult();
+	}
 }

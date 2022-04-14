@@ -8,7 +8,7 @@ public class CryptUtil {
 		return BCrypt.hashpw(senha, BCrypt.gensalt());
 	}
 	
-	public Boolean checkPass(String senhaTexto, String senhaCriptografada) {
+	public static Boolean checkPass(String senhaTexto, String senhaCriptografada) {
 		if (BCrypt.checkpw(senhaTexto, senhaCriptografada)) {
 			return true;
 		} else {

@@ -32,4 +32,10 @@ public class BibliotecarioService {
 		dao.remover(id);
 	}
 	
+	public Boolean loginBiblio(String email, String senha) {
+		Bibliotecario bbt = dao.buscarBiblioLogin(email);
+
+		return CryptUtil.checkPass(senha, bbt.getSenha());
+	}
+	
 }

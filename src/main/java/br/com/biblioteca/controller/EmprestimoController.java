@@ -8,6 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.biblioteca.Authorize;
 import br.com.biblioteca.model.Emprestimo;
 import br.com.biblioteca.service.EmprestimoService;
 
@@ -18,6 +19,7 @@ public class EmprestimoController {
 	private EmprestimoService emprestimoService;
 	
 	@GET
+	@Authorize
 	@Path("{idCliente}/{codigoLivro}")
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro, Emprestimo empr) {
