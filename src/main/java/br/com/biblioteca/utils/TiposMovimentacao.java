@@ -1,0 +1,14 @@
+package br.com.biblioteca.utils;
+
+public enum TiposMovimentacao {
+	CADASTRO_LIVRO,
+	EMPRESTIMO,
+	DEVOLUCAO,
+	EXCLUSAO_LIVRO,
+	ALTERACAO_LIVRO,
+	
+	CADASTRO_CLIENTE,
+	ALTERACAO_CLIENTE,
+	EXCLUSAO_CLIENTE,
+	
+}

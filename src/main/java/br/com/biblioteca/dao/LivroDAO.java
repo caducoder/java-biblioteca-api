@@ -35,7 +35,6 @@ public class LivroDAO {
 		}
 		
 		return lvr;
-		
 	}
 
 	public void alterar(Livro nLivro) {

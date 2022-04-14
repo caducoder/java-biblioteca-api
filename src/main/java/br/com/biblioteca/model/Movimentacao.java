@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.biblioteca.utils.TiposMovimentacao;
+
 @Entity
 @Table(name = "movimentacoes")
 public class Movimentacao {
@@ -27,7 +29,7 @@ public class Movimentacao {
 	private Long idLivro;
 	
 	@Column(name = "tipo_movimentacao")
-	private String tipoMovimentacao;
+	private TiposMovimentacao tipoMovimentacao;
 	
 	@Column(name = "data_hora")
 	private LocalDateTime dataHora;
@@ -61,10 +63,10 @@ public class Movimentacao {
 		this.idLivro = idLivro;
 	}
 	
-	public String getTipoMovimentacao() {
+	public TiposMovimentacao getTipoMovimentacao() {
 		return tipoMovimentacao;
 	}
-	public void setTipoMovimentacao(String tipoMovimentacao) {
+	public void setTipoMovimentacao(TiposMovimentacao tipoMovimentacao) {
 		this.tipoMovimentacao = tipoMovimentacao;
 	}
 	

@@ -18,10 +18,20 @@ public class EmprestimoController {
 	private EmprestimoService emprestimoService;
 	
 	@GET
-	@Path("{idCliente}/{codigoLivro}")
+	@Path("{idCliente: [0-9]*}/{codigoLivro}")
 	@Consumes(value = MediaType.APPLICATION_JSON)
-	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro, Emprestimo empr) {
-		emprestimoService.realizarEmprestimo(idCliente, codigoLivro, empr);
+	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro) {
+		emprestimoService.realizarEmprestimo(idCliente, codigoLivro);
 		return Response.ok().build();
 	}
+	
+	@GET
+	@Path("devolucao/{codigoLivro}")
+	public Response realizarDevolucao(@PathParam("codigoLivro") String codigoLivro) {
+		emprestimoService.devolverLivro(codigoLivro);
+		return Response.ok().build();
+	}
+	
+	
+	
 }

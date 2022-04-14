@@ -14,7 +14,10 @@ public class EmprestimoDAO {
 
 	public void salvarEmprestimo(Emprestimo emprestimo) {
 		em.persist(emprestimo);
-		
+	}
+
+	public void removerEmprestimo(Emprestimo empr) {
+		em.remove(empr);
 	}
 
 }

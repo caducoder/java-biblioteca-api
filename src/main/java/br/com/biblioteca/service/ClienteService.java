@@ -28,7 +28,6 @@ public class ClienteService {
 
 	public void remover(Long id) {
 		dao.remover(id);
-		
 	}
 	
 	public Cliente buscarPorId(Long id) {
@@ -37,6 +36,5 @@ public class ClienteService {
 
 	public void alterar(Cliente nCliente) {
 		dao.alterar(nCliente);
-		
 	}
 }
