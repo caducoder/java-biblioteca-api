@@ -5,6 +5,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -52,10 +53,19 @@ public class ClienteController {
 		return Response.ok(cl).build();
 	}
 	
+	@PUT
+	@Consumes(value = MediaType.APPLICATION_JSON)
+	public Response alterarCliente(Cliente nCliente) {
+		clienteService.alterar(nCliente);
+		return Response.ok().build();
+	}
+	
 	@DELETE
 	@Path("{id}")
 	public Response removerCliente(@PathParam("id") Long id) {
 		clienteService.remover(id);
 		return Response.ok().build();
 	}
+	
+	
 }

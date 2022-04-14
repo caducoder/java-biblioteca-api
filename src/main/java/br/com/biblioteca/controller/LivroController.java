@@ -34,6 +34,19 @@ public class LivroController {
 		return Response.ok(livroService.listar()).build();
 	}
 	
+	@GET
+	@Path("{isbn}")
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public Response buscarPorIsbn(@PathParam("isbn") String isbn) {
+		Livro lvr = livroService.buscarLivroPorIsbn(isbn);
+		
+		if(lvr == null) {
+			return Response.status(404).build();
+		}
+		
+		return Response.ok(lvr).build();
+	}
+	
 	@PUT
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response alterarLivro(Livro nLivro) {

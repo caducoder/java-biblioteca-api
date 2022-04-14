@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import br.com.biblioteca.model.Livro;
@@ -25,10 +26,15 @@ public class LivroDAO {
 
 	public Livro buscarLivroPorIsbn(String isbnL) {
 		String jpql = "SELECT l FROM Livro l WHERE isbn=:isbn";
+		Livro lvr = null;
 		
-		return em.createQuery(jpql, Livro.class)
-				.setParameter("isbn", isbnL)
-				.getSingleResult();
+		try {
+			lvr = em.createQuery(jpql, Livro.class).setParameter("isbn", isbnL).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+		
+		return lvr;
 		
 	}
 

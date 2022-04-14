@@ -31,7 +31,6 @@ public class ClienteDAO {
 		} catch (RuntimeException e) {
 			return null;
 		}
-		System.out.println(cl);
 		return cl;
 	}
 
@@ -42,5 +41,17 @@ public class ClienteDAO {
 
 	public Cliente buscarPorId(Long id) {
 		return em.find(Cliente.class, id);
+	}
+
+	public void alterar(Cliente nCliente) {
+		Cliente clienteAtual = buscarPorId(nCliente.getId());
+		
+		clienteAtual.setNome(nCliente.getNome());
+		clienteAtual.setRg(nCliente.getRg());
+		clienteAtual.setEndereco(nCliente.getEndereco());
+		clienteAtual.setEmail(nCliente.getEmail());
+		clienteAtual.setTelefone(nCliente.getTelefone());
+		
+		em.merge(clienteAtual);
 	}
 }

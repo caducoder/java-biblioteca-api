@@ -15,7 +15,6 @@ public class ClienteService {
 	private ClienteDAO dao;
 	
 	public void cadastrarCliente(Cliente cliente) {
-		System.out.println(cliente);
 		dao.cadastrar(cliente);
 	}
 	
@@ -34,5 +33,10 @@ public class ClienteService {
 	
 	public Cliente buscarPorId(Long id) {
 		return dao.buscarPorId(id);
+	}
+
+	public void alterar(Cliente nCliente) {
+		dao.alterar(nCliente);
+		
 	}
 }
