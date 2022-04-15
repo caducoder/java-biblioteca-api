@@ -43,6 +43,13 @@ public class EmprestimoService {
 		lvr.setEstadoLivro(EstadoLivro.DISPONIVEL);
 		
 		dao.removerEmprestimo(empr);
-		
 	}
+
+	public Emprestimo renovarEmprestimo(String codigoLivro) {
+		Livro lvr = livroService.buscarLivroPorIsbn(codigoLivro);
+		Emprestimo empr = lvr.getEmprestimo();
+		empr.setDataDevolucao(empr.getDataDevolucao().plusDays(15));
+		return dao.renovarEmprestimo(empr);
+	}
+	
 }
