@@ -14,8 +14,13 @@ public class ClienteDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void cadastrar(Cliente cliente) {
-		em.persist(cliente);
+	public void cadastrar(Cliente cliente) throws Exception {
+		try {
+			em.persist(cliente);
+		} catch (Exception e) {
+			throw new Exception("Cliente já está registrado no sistema.");
+		}
+		
 	}
 
 	public List<Cliente> listar() {

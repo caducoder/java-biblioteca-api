@@ -20,7 +20,6 @@ public class EmprestimoController {
 	
 	@GET
 	@Path("{idCliente: [0-9]*}/{codigoLivro}")
-	@Consumes(value = MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro) {
 		try {

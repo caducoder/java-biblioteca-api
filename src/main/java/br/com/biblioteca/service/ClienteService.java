@@ -14,7 +14,7 @@ public class ClienteService {
 	@Inject
 	private ClienteDAO dao;
 	
-	public void cadastrarCliente(Cliente cliente) {
+	public void cadastrarCliente(Cliente cliente) throws Exception {
 		dao.cadastrar(cliente);
 	}
 	

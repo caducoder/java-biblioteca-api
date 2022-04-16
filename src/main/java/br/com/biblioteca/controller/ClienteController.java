@@ -23,16 +23,16 @@ public class ClienteController {
 	
 	@POST
 	@Consumes(value = MediaType.APPLICATION_JSON)
+	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response cadastrarCliente(Cliente cliente) {
 		try {
 			clienteService.cadastrarCliente(cliente);
-			return Response.status(201).build();
+			return Response.status(201).entity("Cliente cadastrado com sucesso").build();
 		} catch (Exception e) {
-			e.printStackTrace();
-			//System.out.println(e.getMessage());
+			return Response.status(403).entity(e.getMessage()).build();
 		}
 		
-		return Response.status(400).build();
+		
 	}
 	
 	@GET
