@@ -21,9 +21,16 @@ public class EmprestimoController {
 	@GET
 	@Path("{idCliente: [0-9]*}/{codigoLivro}")
 	@Consumes(value = MediaType.APPLICATION_JSON)
+	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro) {
-		emprestimoService.realizarEmprestimo(idCliente, codigoLivro);
-		return Response.ok().build();
+		try {
+			emprestimoService.realizarEmprestimo(idCliente, codigoLivro);
+			return Response.ok("Empréstimo realizado com sucesso.").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(403).entity(e.getMessage()).build();
+		}
+		
 	}
 	
 	@GET

@@ -36,6 +36,10 @@ public class LivroDAO {
 		
 		return lvr;
 	}
+	
+	public Livro buscarLivroPorId(Long id) {
+		return em.find(Livro.class, id);
+	}
 
 	public void alterar(Livro nLivro) {
 		Livro oldLivro = em.find(Livro.class, nLivro.getId());
