@@ -15,8 +15,12 @@ public class LivroDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void cadastrar(Livro livro) {
-		em.persist(livro);
+	public void cadastrar(Livro livro) throws Exception {
+		try {
+			em.persist(livro);
+		} catch (Exception e) {
+			throw new Exception("Livro já está registrado no sistema.");
+		}
 	}
 	
 	public List<Livro> listar() {

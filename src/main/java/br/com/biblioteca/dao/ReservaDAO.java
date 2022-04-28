@@ -16,7 +16,6 @@ public class ReservaDAO {
 	private EntityManager em;
 	
 	public void salvar(Reserva reserva) {
-		System.out.println("cheguei no ReservaDAO");
 		em.persist(reserva);
 	}
 
@@ -31,9 +30,9 @@ public class ReservaDAO {
 		return rsv;
 	}
 	
-	public int contarReservasPorCpf(String cpf) {
+	public Long contarReservasPorCpf(String cpf) {
 		String jpql = "SELECT COUNT(r) FROM Reserva r WHERE reservadoPorCpf=:cpf";
-		return (int) em.createQuery(jpql).getSingleResult();
+		return (Long) em.createQuery(jpql).setParameter("cpf", cpf).getSingleResult();
 	}
 	
 	public Reserva buscarReservaPeloLivro(Livro lvr) {

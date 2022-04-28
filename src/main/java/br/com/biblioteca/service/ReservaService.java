@@ -17,9 +17,12 @@ public class ReservaService {
 	private ReservaDAO dao;
 	
 	public void salvarReserva(Reserva reserva) throws Exception {
-		if(dao.contarReservasPorCpf(reserva.getReservadoPorCpf()) > 5) {
+		Long qtdReservas = dao.contarReservasPorCpf(reserva.getReservadoPorCpf());
+		
+		if(qtdReservas > 4) {
 			throw new Exception("Limite de reservas online atingido.");
 		};
+		
 		dao.salvar(reserva);
 	}
 
@@ -41,6 +44,5 @@ public class ReservaService {
 		dao.removerReserva(buscarReservaPeloLivro(livro));
 	}
 	
-
 	
 }

@@ -25,8 +25,13 @@ public class LivroController {
 	@POST
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response cadastrarLivro(Livro livro) {
-		livroService.cadastrar(livro);
-		return Response.status(201).build();
+		try {
+			livroService.cadastrar(livro);
+			return Response.status(201).build();
+		} catch (Exception e) {
+			return Response.status(403).entity(e.getMessage()).build();
+		}
+		
 	}
 	
 	@GET

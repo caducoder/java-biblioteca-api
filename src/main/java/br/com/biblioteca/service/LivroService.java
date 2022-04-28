@@ -27,7 +27,7 @@ public class LivroService {
 	@Inject
 	private MovimentacaoDAO mvtDao;
 	
-	public void cadastrar(Livro livro) {
+	public void cadastrar(Livro livro) throws Exception {
 		dao.cadastrar(livro);
 		Movimentacao mvt = new Movimentacao(null, null, livro.getId(), TiposMovimentacao.CADASTRO_LIVRO, LocalDateTime.now());
 		
@@ -62,8 +62,8 @@ public class LivroService {
 		
 		Reserva reserva = new Reserva(lvr, cpf, LocalDate.now().plusDays(5));
 		
-		lvr.setEstadoLivro(EstadoLivro.RESERVADO);
-		
 		reservaService.salvarReserva(reserva);
+		
+		lvr.setEstadoLivro(EstadoLivro.RESERVADO);
 	}
 }
