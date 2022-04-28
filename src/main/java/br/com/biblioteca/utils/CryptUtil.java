@@ -9,10 +9,6 @@ public class CryptUtil {
 	}
 	
 	public Boolean checkPass(String senhaTexto, String senhaCriptografada) {
-		if (BCrypt.checkpw(senhaTexto, senhaCriptografada)) {
-			return true;
-		} else {
-			return false;
-		}
+		return BCrypt.checkpw(senhaTexto, senhaCriptografada);
 	}
 }

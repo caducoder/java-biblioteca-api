@@ -32,7 +32,6 @@ public class ClienteController {
 			return Response.status(403).entity(e.getMessage()).build();
 		}
 		
-		
 	}
 	
 	@GET

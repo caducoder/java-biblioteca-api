@@ -16,16 +16,16 @@ public class ReservaService {
 	@Inject
 	private ReservaDAO dao;
 	
-	public void salvarReserva(Reserva reserva) {
-		System.out.println("cheguei no ReservaService");
+	public void salvarReserva(Reserva reserva) throws Exception {
+		if(dao.contarReservasPorCpf(reserva.getReservadoPorCpf()) > 5) {
+			throw new Exception("Limite de reservas online atingido.");
+		};
 		dao.salvar(reserva);
 	}
 
 	public boolean verificarReserva(Cliente cl, Livro livro) {
-		System.out.println("cheguei verificarReserva");
-		//verifica se existe uma reserva desse livro para esse cliente
+		//verifica se existe reserva do livro para esse cliente
 		Boolean ehReservado = buscarReservasPorCpf(cl.getCpf()).stream().filter(r -> r.getLivro() == livro).findFirst().isPresent();
-		System.out.println("passei boolean ehReservado");
 		return ehReservado;
 	}
 	
@@ -40,5 +40,7 @@ public class ReservaService {
 	public void removerReserva(Livro livro) {
 		dao.removerReserva(buscarReservaPeloLivro(livro));
 	}
+	
+
 	
 }

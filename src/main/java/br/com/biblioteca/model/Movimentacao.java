@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ public class Movimentacao {
 	@Column(name = "id_livro")
 	private Long idLivro;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_movimentacao")
 	private TiposMovimentacao tipoMovimentacao;
 	
@@ -35,6 +38,19 @@ public class Movimentacao {
 	private LocalDateTime dataHora;
 	
 	
+	public Movimentacao() {
+	}
+	
+	public Movimentacao(Long idUsuario, Long idCliente, Long idLivro, TiposMovimentacao tipoMovimentacao,
+			LocalDateTime dataHora) {
+		this.idUsuario = idUsuario;
+		this.idCliente = idCliente;
+		this.idLivro = idLivro;
+		this.tipoMovimentacao = tipoMovimentacao;
+		this.dataHora = dataHora;
+	}
+
+
 	public Long getIdUsuario() {
 		return idUsuario;
 	}

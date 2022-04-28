@@ -1,15 +1,19 @@
 package br.com.biblioteca.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.biblioteca.dao.LivroDAO;
+import br.com.biblioteca.dao.MovimentacaoDAO;
 import br.com.biblioteca.model.Livro;
+import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.model.Reserva;
 import br.com.biblioteca.utils.EstadoLivro;
+import br.com.biblioteca.utils.TiposMovimentacao;
 
 @Stateless
 public class LivroService {
@@ -20,8 +24,14 @@ public class LivroService {
 	@Inject
 	private ReservaService reservaService;
 	
+	@Inject
+	private MovimentacaoDAO mvtDao;
+	
 	public void cadastrar(Livro livro) {
 		dao.cadastrar(livro);
+		Movimentacao mvt = new Movimentacao(null, null, livro.getId(), TiposMovimentacao.CADASTRO_LIVRO, LocalDateTime.now());
+		
+		mvtDao.registrar(mvt);
 	}
 
 	public List<Livro> listar() {

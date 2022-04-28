@@ -31,6 +31,11 @@ public class ReservaDAO {
 		return rsv;
 	}
 	
+	public int contarReservasPorCpf(String cpf) {
+		String jpql = "SELECT COUNT(r) FROM Reserva r WHERE reservadoPorCpf=:cpf";
+		return (int) em.createQuery(jpql).getSingleResult();
+	}
+	
 	public Reserva buscarReservaPeloLivro(Livro lvr) {
 		String jpql = "SELECT r FROM Reserva r WHERE livro=:livro";
 		return em.createQuery(jpql, Reserva.class).setParameter("livro", lvr).getSingleResult();
