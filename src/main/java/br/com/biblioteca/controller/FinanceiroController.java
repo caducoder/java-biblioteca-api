@@ -21,8 +21,8 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.com.biblioteca.model.FinanceiroForm;
-import br.com.biblioteca.model.PdfFileInfo;
 import br.com.biblioteca.service.FinanceiroService;
+import br.com.biblioteca.utils.PdfFileInfo;
 
 
 @Path("/financeiro")
@@ -56,8 +56,9 @@ public class FinanceiroController {
 		try {
 			// salvando pdf na pasta
 			writeFile(formData.getDados(), caminho_pasta);
-			
-			FinanceiroForm fin = new FinanceiroForm(nomeArq, formData.getValor(), LocalDate.now());
+	
+			FinanceiroForm fin = new FinanceiroForm(nomeArq, formData.getTipoOperacao(), formData.getValor(), LocalDate.now());
+
 			//salvando dados do financeiro no banco de dados
 			financeiroService.salvarFinanca(fin);
 
@@ -66,7 +67,7 @@ public class FinanceiroController {
 		} catch (IOException e) {
 			
 			e.printStackTrace();
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(400).entity(e.getMessage()).build();
 		}
 
 	}
@@ -104,7 +105,7 @@ public class FinanceiroController {
 		}
 
 		FileOutputStream fop = new FileOutputStream(file);
-
+		
 		fop.write(content);
 		fop.flush();
 		fop.close();

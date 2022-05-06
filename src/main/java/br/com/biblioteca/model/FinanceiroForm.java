@@ -20,6 +20,9 @@ public class FinanceiroForm {
 
 	@Column(name ="nome_arquivo")
 	private String fileName;
+	
+	@Column(name = "tipo_operacao")
+	private String tipoOperacao;
 
 	private BigDecimal valor;
 	
@@ -28,8 +31,9 @@ public class FinanceiroForm {
 	public FinanceiroForm() {
 	}
 	
-	public FinanceiroForm(String fileName, BigDecimal valor, LocalDate data) {
+	public FinanceiroForm(String fileName, String tipoOperacao, BigDecimal valor, LocalDate data) {
 		this.fileName = fileName;
+		this.tipoOperacao = tipoOperacao;
 		this.valor = valor;
 		this.data = data;
 	}
@@ -48,6 +52,14 @@ public class FinanceiroForm {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+	
+	public String getTipoOperacao() {
+		return tipoOperacao;
+	}
+
+	public void setTipoOperacao(String tipoOperacao) {
+		this.tipoOperacao = tipoOperacao;
 	}
 
 	public BigDecimal getValor() {
