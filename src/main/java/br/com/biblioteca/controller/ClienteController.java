@@ -5,6 +5,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -24,15 +25,15 @@ public class ClienteController {
 	@POST
 	@Authorize
 	@Consumes(value = MediaType.APPLICATION_JSON)
+	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response cadastrarCliente(Cliente cliente) {
 		try {
 			clienteService.cadastrarCliente(cliente);
-			return Response.status(201).build();
+			return Response.status(201).entity("Cliente cadastrado com sucesso").build();
 		} catch (Exception e) {
-			e.printStackTrace();
+			return Response.status(403).entity(e.getMessage()).build();
 		}
 		
-		return Response.status(400).build();
 	}
 	
 	@GET
@@ -55,6 +56,13 @@ public class ClienteController {
 		return Response.ok(cl).build();
 	}
 	
+	@PUT
+	@Consumes(value = MediaType.APPLICATION_JSON)
+	public Response alterarCliente(Cliente nCliente) {
+		clienteService.alterar(nCliente);
+		return Response.ok().build();
+	}
+	
 	@DELETE
 	@Authorize
 	@Path("{id}")
@@ -62,4 +70,6 @@ public class ClienteController {
 		clienteService.remover(id);
 		return Response.ok().build();
 	}
+	
+	
 }

@@ -12,9 +12,15 @@ public class EmprestimoDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-	public void salvarEmprestimo(Emprestimo emprestimo) {
-		em.persist(emprestimo);
-		
+	public void salvarEmprestimo(Emprestimo empr) {
+		em.persist(empr);
 	}
 
+	public void removerEmprestimo(Emprestimo empr) {
+		em.remove(empr);
+	}
+
+	public Emprestimo renovarEmprestimo(Emprestimo empr) {
+		return em.merge(empr);
+	}
 }

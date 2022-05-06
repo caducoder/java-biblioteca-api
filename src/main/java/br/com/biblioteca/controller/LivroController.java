@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import br.com.biblioteca.Authorize;
 import br.com.biblioteca.model.Livro;
@@ -26,14 +27,47 @@ public class LivroController {
 	@Authorize
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response cadastrarLivro(Livro livro) {
-		livroService.cadastrar(livro);
-		return Response.status(201).build();
+		try {
+			livroService.cadastrar(livro);
+			return Response.status(201).build();
+		} catch (Exception e) {
+			return Response.status(403).entity(e.getMessage()).build();
+		}
+		
 	}
 	
 	@GET
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listarLivros() {
 		return Response.ok(livroService.listar()).build();
+	}
+	
+	@GET
+	@Path("{isbn}")
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public Response buscarPorIsbn(@PathParam("isbn") String isbn) {
+		Livro lvr = livroService.buscarLivroPorIsbn(isbn);
+		
+		if(lvr == null) {
+			return Response.status(404).build();
+		}
+		
+		return Response.ok(lvr).build();
+	}
+	
+	@GET
+	@Path("{idLivro: [0-9]*}/{cpf}")
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public Response reservarLivro(@PathParam("idLivro") Long idLivro, @PathParam("cpf") String cpf) {
+		try {
+			livroService.reservar(idLivro, cpf);
+			
+			return Response.ok("Reserva registrada com sucesso.").build();
+		} catch (Exception e) {
+			return Response.status(Status.FORBIDDEN).entity(e.getMessage()).build();
+		}
+		
+		
 	}
 	
 	@PUT

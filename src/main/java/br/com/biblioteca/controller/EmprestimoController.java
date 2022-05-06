@@ -5,6 +5,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -19,11 +20,32 @@ public class EmprestimoController {
 	private EmprestimoService emprestimoService;
 	
 	@GET
-	@Authorize
-	@Path("{idCliente}/{codigoLivro}")
-	@Consumes(value = MediaType.APPLICATION_JSON)
-	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro, Emprestimo empr) {
-		emprestimoService.realizarEmprestimo(idCliente, codigoLivro, empr);
+	@Path("{idCliente: [0-9]*}/{codigoLivro}")
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro) {
+		try {
+			emprestimoService.realizarEmprestimo(idCliente, codigoLivro);
+			return Response.ok("Empr�stimo realizado com sucesso.").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(403).entity(e.getMessage()).build();
+		}
+		
+	}
+	
+	@GET
+	@Path("devolucao/{codigoLivro}")
+	public Response realizarDevolucao(@PathParam("codigoLivro") String codigoLivro) {
+		emprestimoService.devolverLivro(codigoLivro);
 		return Response.ok().build();
 	}
+	
+	@GET
+	@Path("renovar/{codigoLivro}")
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public Response renovarEmprestimo(@PathParam("codigoLivro") String codigoLivro) {
+		Emprestimo emprRenovado = emprestimoService.renovarEmprestimo(codigoLivro);
+		return Response.ok(emprRenovado).build();
+	}
+	
 }

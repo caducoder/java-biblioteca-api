@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import br.com.biblioteca.model.Livro;
@@ -14,8 +15,12 @@ public class LivroDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void cadastrar(Livro livro) {
-		em.persist(livro);
+	public void cadastrar(Livro livro) throws Exception {
+		try {
+			em.persist(livro);
+		} catch (Exception e) {
+			throw new Exception("Livro já está registrado no sistema.");
+		}
 	}
 	
 	public List<Livro> listar() {
@@ -25,11 +30,19 @@ public class LivroDAO {
 
 	public Livro buscarLivroPorIsbn(String isbnL) {
 		String jpql = "SELECT l FROM Livro l WHERE isbn=:isbn";
+		Livro lvr = null;
 		
-		return em.createQuery(jpql, Livro.class)
-				.setParameter("isbn", isbnL)
-				.getSingleResult();
+		try {
+			lvr = em.createQuery(jpql, Livro.class).setParameter("isbn", isbnL).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 		
+		return lvr;
+	}
+	
+	public Livro buscarLivroPorId(Long id) {
+		return em.find(Livro.class, id);
 	}
 
 	public void alterar(Livro nLivro) {

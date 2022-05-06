@@ -19,6 +19,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.3.1</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -72,5 +75,10 @@
 			<version>0.11.2</version>
 			<scope>runtime</scope>
 		</dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-multipart-provider</artifactId>
+			<version>3.12.1.Final</version>
+		</dependency>
+
 	</dependencies>
 </project>

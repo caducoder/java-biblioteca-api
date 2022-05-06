@@ -14,8 +14,13 @@ public class ClienteDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void cadastrar(Cliente cliente) {
-		em.persist(cliente);
+	public void cadastrar(Cliente cliente) throws Exception {
+		try {
+			em.persist(cliente);
+		} catch (Exception e) {
+			throw new Exception("Cliente já está registrado no sistema.");
+		}
+		
 	}
 
 	public List<Cliente> listar() {
@@ -31,7 +36,6 @@ public class ClienteDAO {
 		} catch (RuntimeException e) {
 			return null;
 		}
-		System.out.println(cl);
 		return cl;
 	}
 
@@ -42,5 +46,17 @@ public class ClienteDAO {
 
 	public Cliente buscarPorId(Long id) {
 		return em.find(Cliente.class, id);
+	}
+
+	public void alterar(Cliente nCliente) {
+		Cliente clienteAtual = buscarPorId(nCliente.getId());
+		
+		clienteAtual.setNome(nCliente.getNome());
+		clienteAtual.setRg(nCliente.getRg());
+		clienteAtual.setEndereco(nCliente.getEndereco());
+		clienteAtual.setEmail(nCliente.getEmail());
+		clienteAtual.setTelefone(nCliente.getTelefone());
+		
+		em.merge(clienteAtual);
 	}
 }

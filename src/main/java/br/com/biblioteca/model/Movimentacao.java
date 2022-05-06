@@ -4,10 +4,14 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import br.com.biblioteca.utils.TiposMovimentacao;
 
 @Entity
 @Table(name = "movimentacoes")
@@ -26,13 +30,27 @@ public class Movimentacao {
 	@Column(name = "id_livro")
 	private Long idLivro;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_movimentacao")
-	private String tipoMovimentacao;
+	private TiposMovimentacao tipoMovimentacao;
 	
 	@Column(name = "data_hora")
 	private LocalDateTime dataHora;
 	
 	
+	public Movimentacao() {
+	}
+	
+	public Movimentacao(Long idUsuario, Long idCliente, Long idLivro, TiposMovimentacao tipoMovimentacao,
+			LocalDateTime dataHora) {
+		this.idUsuario = idUsuario;
+		this.idCliente = idCliente;
+		this.idLivro = idLivro;
+		this.tipoMovimentacao = tipoMovimentacao;
+		this.dataHora = dataHora;
+	}
+
+
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
@@ -61,10 +79,10 @@ public class Movimentacao {
 		this.idLivro = idLivro;
 	}
 	
-	public String getTipoMovimentacao() {
+	public TiposMovimentacao getTipoMovimentacao() {
 		return tipoMovimentacao;
 	}
-	public void setTipoMovimentacao(String tipoMovimentacao) {
+	public void setTipoMovimentacao(TiposMovimentacao tipoMovimentacao) {
 		this.tipoMovimentacao = tipoMovimentacao;
 	}
 	
