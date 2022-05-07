@@ -1,10 +1,11 @@
-package br.com.biblioteca.utils;
+package br.com.biblioteca.model;
 
 import java.math.BigDecimal;
 
 import javax.ws.rs.FormParam;
 
 import org.jboss.resteasy.annotations.providers.multipart.PartType;
+
 
 
 public class PdfFileInfo {
@@ -15,25 +16,26 @@ public class PdfFileInfo {
 	@FormParam("valor")
 	private BigDecimal valor;
 	
-	@FormParam("tipo")
-	private String tipo;
-	
 	private byte[] dados;
 	
 	public PdfFileInfo() {
 	}
 
+
 	public String getFilename() {
 		return filename;
 	}
+
 
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
 
+
 	public byte[] getDados() {
 		return dados;
 	}
+
 
 	@FormParam("file")
 	@PartType("application/octet-stream")
@@ -41,21 +43,16 @@ public class PdfFileInfo {
 		this.dados = dados;
 	}
 
+
 	public BigDecimal getValor() {
 		return valor;
 	}
 
+
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
-
-	public String getTipoOperacao() {
-		return tipo;
-	}
-
-	public void setTipoOperacao(String tipo) {
-		this.tipo = tipo;
-	}
+	
 	
 	
 }
