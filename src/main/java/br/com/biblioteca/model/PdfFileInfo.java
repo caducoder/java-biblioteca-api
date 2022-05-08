@@ -16,6 +16,9 @@ public class PdfFileInfo {
 	@FormParam("valor")
 	private BigDecimal valor;
 	
+	@FormParam("tipo")
+	private String tipo;
+	
 	private byte[] dados;
 	
 	public PdfFileInfo() {
@@ -53,6 +56,12 @@ public class PdfFileInfo {
 		this.valor = valor;
 	}
 	
-	
+	public String getTipoOperacao() {
+		return tipo;
+	}
+
+	public void setTipoOperacao(String tipo) {
+		this.tipo = tipo;
+	}
 	
 }

@@ -57,7 +57,7 @@ public class FinanceiroController {
 			// salvando pdf na pasta
 			writeFile(formData.getDados(), caminho_pasta);
 			
-			FinanceiroForm fin = new FinanceiroForm(nomeArq, formData.getValor(), LocalDate.now());
+			FinanceiroForm fin = new FinanceiroForm(nomeArq, formData.getTipoOperacao(), formData.getValor(), LocalDate.now());
 			//salvando dados do financeiro no banco de dados
 			financeiroService.salvarFinanca(fin);
 
