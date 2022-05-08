@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.service.ClienteService;
 
@@ -35,6 +36,7 @@ public class ClienteController {
 	}
 	
 	@GET
+	@Secured
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listarClientes() {
 		return Response.ok(clienteService.listarClientes()).build();

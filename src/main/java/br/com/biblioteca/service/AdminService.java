@@ -18,4 +18,13 @@ public class AdminService {
 		dao.cadastrar(admin);
 
 	}
+
+	public boolean loginAdmin(String email, String senha) {
+		Administrador admin = dao.buscarAdminLogin(email);
+		if(admin != null) {
+			return CryptUtil.checkPass(senha, admin.getSenha());
+		}
+		
+		return false;
+	}
 }

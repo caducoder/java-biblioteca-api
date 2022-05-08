@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.FinanceiroForm;
 import br.com.biblioteca.service.FinanceiroService;
 import br.com.biblioteca.utils.PdfFileInfo;
@@ -42,6 +43,7 @@ public class FinanceiroController {
 	}
 	
 	@POST
+	@Secured
 	@Path("/upload")
 	@Consumes("multipart/form-data")
 	@Produces(value = MediaType.TEXT_PLAIN)
@@ -73,6 +75,7 @@ public class FinanceiroController {
 	}
 	
 	@GET
+	@Secured
 	@Path("/download/{id}")
 	@Produces("application/pdf")
 	public Response downloadNotaFiscal(@PathParam("id") Long id) {

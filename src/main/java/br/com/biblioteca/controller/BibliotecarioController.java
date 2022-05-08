@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.Bibliotecario;
 import br.com.biblioteca.service.BibliotecarioService;
 
@@ -21,6 +22,7 @@ public class BibliotecarioController {
 	private BibliotecarioService bibliotecarioService;
 	
 	@POST
+	@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response cadastrarBibliotecario(Bibliotecario bibliotecario) {
 		try {
@@ -35,12 +37,14 @@ public class BibliotecarioController {
 	}
 	
 	@GET
+	@Secured
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listarBibliotecarios() {
 		return Response.ok(bibliotecarioService.listarBibliotecarios()).build();
 	}
 	
 	@GET
+	@Secured
 	@Path("{cpf}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorCpf(@PathParam("cpf") String cpf) {
@@ -53,6 +57,7 @@ public class BibliotecarioController {
 	}
 	
 	@DELETE
+	@Secured
 	@Path("{id}")
 	public Response removerBibliotecario(@PathParam("id") Long id) {
 		bibliotecarioService.remover(id);
