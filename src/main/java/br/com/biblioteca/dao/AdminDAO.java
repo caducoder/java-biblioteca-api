@@ -16,4 +16,18 @@ public class AdminDAO {
 		em.persist(admin);		
 	}
 
+	public Administrador buscarAdminLogin(String email) {
+		String jpql = "SELECT a FROM Administrador a WHERE email=:email";
+		Administrador ad = null;
+		try {
+			ad = em.createQuery(jpql, Administrador.class)
+					.setParameter("email", email)
+					.getSingleResult();
+		} catch (RuntimeException e) {
+			return null;
+		}
+		
+		return ad;
+	}
+
 }

@@ -57,6 +57,7 @@ public class ClienteController {
 	}
 	
 	@PUT
+	@Authorize
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response alterarCliente(Cliente nCliente) {
 		clienteService.alterar(nCliente);

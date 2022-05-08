@@ -41,8 +41,15 @@ public class BibliotecarioDAO {
 	
 	public Bibliotecario buscarBiblioLogin(String emailEnv) {
 		String jpql = "SELECT b FROM Bibliotecario b WHERE email=:email";
-		return em.createQuery(jpql, Bibliotecario.class)
-				.setParameter("email", emailEnv)
-				.getSingleResult();
+		Bibliotecario bi = null;
+		try {
+			bi = em.createQuery(jpql, Bibliotecario.class)
+					.setParameter("email", emailEnv)
+					.getSingleResult();
+		} catch (RuntimeException e) {
+			return null;
+		}
+		
+		return bi;
 	}
 }

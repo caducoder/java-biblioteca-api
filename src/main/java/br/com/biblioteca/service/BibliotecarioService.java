@@ -34,8 +34,11 @@ public class BibliotecarioService {
 	
 	public Boolean loginBiblio(String email, String senha) {
 		Bibliotecario bbt = dao.buscarBiblioLogin(email);
-
-		return CryptUtil.checkPass(senha, bbt.getSenha());
+		if(bbt != null) {
+			return CryptUtil.checkPass(senha, bbt.getSenha());
+		}
+		
+		return false;
 	}
 	
 }
