@@ -48,10 +48,18 @@ public class LivroService {
 
 	public void alterar(Livro nLivro) {
 		dao.alterar(nLivro);
+		
+		Movimentacao mvt = new Movimentacao(null, null, nLivro.getId(), TiposMovimentacao.ALTERACAO_LIVRO, LocalDateTime.now());
+		
+		mvtDao.registrar(mvt);
 	}
 
 	public void remover(Long idLivro) {
 		dao.remover(idLivro);
+		
+		Movimentacao mvt = new Movimentacao(null, null, null, TiposMovimentacao.EXCLUSAO_LIVRO, LocalDateTime.now());
+		
+		mvtDao.registrar(mvt);
 	}
 
 	public void reservar(Long idLivro, String cpf) throws Exception {

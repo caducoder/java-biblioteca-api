@@ -1,15 +1,19 @@
 package br.com.biblioteca.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.biblioteca.dao.EmprestimoDAO;
+import br.com.biblioteca.dao.MovimentacaoDAO;
 import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.model.Emprestimo;
 import br.com.biblioteca.model.Livro;
+import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.utils.EstadoLivro;
+import br.com.biblioteca.utils.TiposMovimentacao;
 
 @Stateless
 public class EmprestimoService {
@@ -22,6 +26,8 @@ public class EmprestimoService {
 	private LivroService livroService;
 	@Inject
 	private ReservaService reservaService;
+	@Inject
+	private MovimentacaoDAO mvtDao;
 
 	public void realizarEmprestimo(Long idCliente, String codigoLivro) throws Exception {
 		// TODO: bloquear emprestimo de livro já emprestado
@@ -44,7 +50,9 @@ public class EmprestimoService {
 			emprestimo.setEmprestadoEm(LocalDate.now());
 			emprestimo.setDataDevolucao(LocalDate.now().plusDays(15));
 			cl.adicionarEmprestimo(emprestimo);
-
+			Movimentacao mvt = new Movimentacao(null, cl.getId(), livro.getId(), TiposMovimentacao.EMPRESTIMO, LocalDateTime.now());
+			
+			mvtDao.registrar(mvt);
 			dao.salvarEmprestimo(emprestimo);
 		}
 	}
@@ -54,7 +62,9 @@ public class EmprestimoService {
 		Emprestimo empr = lvr.getEmprestimo();
 		empr.getCliente().getEmprestimos().remove(empr);
 		lvr.setEstadoLivro(EstadoLivro.DISPONIVEL);
-
+		Movimentacao mvt = new Movimentacao(null, empr.getCliente().getId(), lvr.getId(), TiposMovimentacao.DEVOLUCAO, LocalDateTime.now());
+		
+		mvtDao.registrar(mvt);
 		dao.removerEmprestimo(empr);
 	}
 

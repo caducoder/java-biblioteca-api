@@ -23,6 +23,7 @@ public class ClienteController {
 	private ClienteService clienteService;
 	
 	@POST
+	@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response cadastrarCliente(Cliente cliente) {
@@ -43,6 +44,7 @@ public class ClienteController {
 	}
 	
 	@GET
+	@Secured
 	@Path("{cpf}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorCpf(@PathParam("cpf") String cpf) {
@@ -55,6 +57,7 @@ public class ClienteController {
 	}
 	
 	@PUT
+	@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response alterarCliente(Cliente nCliente) {
 		clienteService.alterar(nCliente);
@@ -62,6 +65,7 @@ public class ClienteController {
 	}
 	
 	@DELETE
+	@Secured
 	@Path("{id}")
 	public Response removerCliente(@PathParam("id") Long id) {
 		clienteService.remover(id);

@@ -29,7 +29,7 @@ public class LivroController {
 	public Response cadastrarLivro(Livro livro) {
 		try {
 			livroService.cadastrar(livro);
-			return Response.status(201).build();
+			return Response.status(201).entity("Livro cadastrado com sucesso!").build();
 		} catch (Exception e) {
 			return Response.status(403).entity(e.getMessage()).build();
 		}

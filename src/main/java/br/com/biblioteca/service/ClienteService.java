@@ -38,6 +38,9 @@ public class ClienteService {
 
 	public void remover(Long id) {
 		dao.remover(id);
+		Movimentacao mvt = new Movimentacao(null, id, null, TiposMovimentacao.EXCLUSAO_CLIENTE, LocalDateTime.now());
+		
+		mvtDao.registrar(mvt);
 	}
 	
 	public Cliente buscarPorId(Long id) {
@@ -46,5 +49,8 @@ public class ClienteService {
 
 	public void alterar(Cliente nCliente) {
 		dao.alterar(nCliente);
+		Movimentacao mvt = new Movimentacao(null, nCliente.getId(), null, TiposMovimentacao.ALTERACAO_CLIENTE, LocalDateTime.now());
+		
+		mvtDao.registrar(mvt);
 	}
 }
