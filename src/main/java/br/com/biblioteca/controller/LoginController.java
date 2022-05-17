@@ -7,7 +7,6 @@ import java.util.Date;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.biblioteca.service.AdminService;
 import br.com.biblioteca.service.BibliotecarioService;
 import br.com.biblioteca.utils.AuthResponse;
+import br.com.biblioteca.utils.Credentials;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -35,16 +35,16 @@ public class LoginController {
 	private AdminService adminService;
 	
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response autenticarUsuario(@FormParam("email") String email, @FormParam("senha") String senha) {
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response autenticarUsuario(Credentials credenciais) {
 		AuthResponse authParams = new AuthResponse();
 		try {
 			// adiciona na resposta o código equivalente a função do usuario: admin ou bibliotecario
-			authParams.addRole(authenticate(email, senha));
+			authParams.addRole(authenticate(credenciais.getEmail(), credenciais.getSenha()));
 			
 			// emitindo token para o email recebido
-			String token = issueToken(email);
+			String token = issueToken(credenciais.getEmail());
 
 			// setando o token na resposta
 			authParams.setAccessToken(token);
@@ -55,13 +55,14 @@ public class LoginController {
 		}
 	}
 	
-	private String authenticate(String email, String senha) throws Exception {
+	// método que verifica se o usuário é bibliotecario ou administrador, e retorna o código equivalente
+	private int authenticate(String email, String senha) throws Exception {
 		
 		if(bibliotecarioService.loginBiblio(email, senha)) {
-			return "2200";// código para bibliotecario
+			return 2200;// código para bibliotecario
 		}
 		if(adminService.loginAdmin(email, senha)) {
-			return "2205";// código para admin
+			return 2205;// código para admin
 		}
 		//caso não encontre nenhum dos dois
 		throw new Exception("Usuário e/ou senha inválidos");

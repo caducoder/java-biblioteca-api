@@ -53,6 +53,7 @@ public class LivroDAO {
 		oldLivro.setIssn(nLivro.getIssn());
 		oldLivro.setDoi(nLivro.getDoi());
 		oldLivro.setAutor(nLivro.getAutor());
+		oldLivro.setEditora(nLivro.getEditora());
 		oldLivro.setTitulo(nLivro.getTitulo());
 		oldLivro.setIdioma(nLivro.getIdioma());
 		oldLivro.setDescricao(nLivro.getDescricao());

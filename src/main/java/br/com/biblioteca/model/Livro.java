@@ -27,6 +27,7 @@ public class Livro {
 	private String doi;
 	private String autor;
 	private String titulo;
+	private String editora;
 	@Enumerated(EnumType.STRING)
 	private Idioma idioma;
 	private String descricao;
@@ -138,12 +139,20 @@ public class Livro {
 	public void setDoi(String doi) {
 		this.doi = doi;
 	}
+	
+	public String getEditora() {
+		return editora;
+	}
+
+	public void setEditora(String editora) {
+		this.editora = editora;
+	}
 
 	@Override
 	public String toString() {
 		return "Livro [autor=" + autor + ", titulo=" + titulo + ", idioma=" + idioma + ", numeroDePaginas="
 				+ numeroDePaginas + ", anoEdicao=" + anoEdicao + ", estadoLivro=" + estadoLivro + "]";
 	}
-	
+
 	
 }

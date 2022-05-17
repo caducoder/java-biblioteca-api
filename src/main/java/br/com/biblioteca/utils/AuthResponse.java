@@ -5,13 +5,13 @@ import java.util.List;
 
 public class AuthResponse {
 
-	private List<String> roles = new ArrayList<String>();
+	private List<Integer> roles = new ArrayList<Integer>();
 	private String accessToken;
 	
-	public List<String> getRoles() {
+	public List<Integer> getRoles() {
 		return roles;
 	}
-	public void addRole(String role) {
+	public void addRole(Integer role) {
 		this.roles.add(role);
 	}
 	public String getAccessToken() {
