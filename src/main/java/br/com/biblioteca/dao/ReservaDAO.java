@@ -43,4 +43,10 @@ public class ReservaDAO {
 	public void removerReserva(Reserva reserva) {
 		em.remove(reserva);
 	}
+
+	public Long contarReservasTotal() {
+		String jpql = "SELECT COUNT(r) FROM Reserva r";
+		
+		return (Long) em.createQuery(jpql).getSingleResult();
+	}
 }

@@ -44,6 +44,13 @@ public class ClienteController {
 	}
 	
 	@GET
+	@Path("/quantidade")
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public Response quantidadeDeClientes() {
+		return Response.ok(clienteService.contarClientes()).build();
+	}
+	
+	@GET
 	@Secured
 	@Path("{cpf}")
 	@Produces(value = MediaType.APPLICATION_JSON)

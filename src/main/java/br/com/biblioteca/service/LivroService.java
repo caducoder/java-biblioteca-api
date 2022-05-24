@@ -74,4 +74,8 @@ public class LivroService {
 		
 		lvr.setEstadoLivro(EstadoLivro.RESERVADO);
 	}
+
+	public Long quantidade() {
+		return dao.quantidadeLivros();
+	}
 }

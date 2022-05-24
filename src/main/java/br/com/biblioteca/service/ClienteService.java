@@ -53,4 +53,8 @@ public class ClienteService {
 		
 		mvtDao.registrar(mvt);
 	}
+
+	public Long contarClientes() {
+		return dao.contarClientes();
+	}
 }

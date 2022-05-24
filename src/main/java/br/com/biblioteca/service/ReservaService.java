@@ -43,6 +43,10 @@ public class ReservaService {
 	public void removerReserva(Livro livro) {
 		dao.removerReserva(buscarReservaPeloLivro(livro));
 	}
+
+	public Long contarReservas() {
+		return dao.contarReservasTotal();
+	}
 	
 	
 }

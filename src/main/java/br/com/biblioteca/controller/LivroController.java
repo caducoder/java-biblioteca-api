@@ -16,12 +16,14 @@ import javax.ws.rs.core.Response.Status;
 import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.Livro;
 import br.com.biblioteca.service.LivroService;
+import br.com.biblioteca.service.ReservaService;
 
 @Path("/livros")
 public class LivroController {
 	
 	@Inject
 	private LivroService livroService;
+
 
 	@POST
 	@Secured
@@ -40,6 +42,13 @@ public class LivroController {
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listarLivros() {
 		return Response.ok(livroService.listar()).build();
+	}
+	
+	@GET
+	@Path("/quantidade")
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public Response quantidadeDeLivros() {
+		return Response.ok(livroService.quantidade()).build();
 	}
 	
 	@GET
@@ -66,8 +75,6 @@ public class LivroController {
 		} catch (Exception e) {
 			return Response.status(Status.FORBIDDEN).entity(e.getMessage()).build();
 		}
-		
-		
 	}
 	
 	@PUT

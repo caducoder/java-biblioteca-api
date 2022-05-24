@@ -23,4 +23,10 @@ public class EmprestimoDAO {
 	public Emprestimo renovarEmprestimo(Emprestimo empr) {
 		return em.merge(empr);
 	}
+
+	public Long contarEmprestimos() {
+		String jpql = "SELECT COUNT(e) FROM Emprestimo e";
+		
+		return (Long) em.createQuery(jpql).getSingleResult();
+	}
 }

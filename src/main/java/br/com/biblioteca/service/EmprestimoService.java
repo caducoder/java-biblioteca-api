@@ -75,4 +75,8 @@ public class EmprestimoService {
 		return dao.renovarEmprestimo(empr);
 	}
 
+	public Long contarEmprestimos() {
+		return dao.contarEmprestimos();
+	}
+
 }

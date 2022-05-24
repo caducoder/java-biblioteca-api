@@ -50,4 +50,12 @@ public class EmprestimoController {
 		return Response.ok(emprRenovado).build();
 	}
 	
+	@GET
+	@Path("/quantidade")
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public Response quantidadeDeEmprestimos() {
+		return Response.ok(emprestimoService.contarEmprestimos()).build();
+	}
+	
+	
 }

@@ -67,5 +67,11 @@ public class LivroDAO {
 		Livro lvr = em.find(Livro.class, idLivro);
 		em.remove(lvr);
 	}
+
+	public Long quantidadeLivros() {
+		String jpql = "SELECT COUNT(l) FROM Livro l";
+		
+		return (Long) em.createQuery(jpql).getSingleResult();
+	}
 	
 }

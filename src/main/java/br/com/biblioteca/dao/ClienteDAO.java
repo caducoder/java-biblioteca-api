@@ -59,4 +59,10 @@ public class ClienteDAO {
 		
 		em.merge(clienteAtual);
 	}
+
+	public Long contarClientes() {
+		String jpql = "SELECT COUNT(c) FROM Cliente c";
+		
+		return (Long) em.createQuery(jpql).getSingleResult();
+	}
 }
