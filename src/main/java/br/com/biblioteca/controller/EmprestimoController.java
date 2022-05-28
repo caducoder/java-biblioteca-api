@@ -36,9 +36,16 @@ public class EmprestimoController {
 	@GET
 	@Secured
 	@Path("devolucao/{codigoLivro}")
+	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response realizarDevolucao(@PathParam("codigoLivro") String codigoLivro) {
-		emprestimoService.devolverLivro(codigoLivro);
-		return Response.ok().build();
+		try {
+			emprestimoService.devolverLivro(codigoLivro);
+			return Response.ok().entity("Devolução registrada com sucesso.").build();
+		} catch (Exception e) {
+			return Response.status(404).entity(e.getMessage()).build();
+			
+		}
+		
 	}
 	
 	@GET

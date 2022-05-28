@@ -28,13 +28,13 @@ public class ClienteDAO {
 		return em.createQuery(jpql, Cliente.class).getResultList();
 	}
 	
-	public Cliente buscarPorCpf(String cpfcl) {
+	public Cliente buscarPorCpf(String cpfcl) throws Exception {
 		String jpql = "SELECT c FROM Cliente c WHERE cpf=:cpf";
 		Cliente cl = null;
 		try {
 			cl = em.createQuery(jpql, Cliente.class).setParameter("cpf", cpfcl).getSingleResult();
 		} catch (RuntimeException e) {
-			return null;
+			throw new Exception("Cliente não encontrado. Cadastre-se na biblioteca.");
 		}
 		return cl;
 	}

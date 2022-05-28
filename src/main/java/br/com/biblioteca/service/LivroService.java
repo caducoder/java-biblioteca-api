@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import br.com.biblioteca.dao.LivroDAO;
 import br.com.biblioteca.dao.MovimentacaoDAO;
+import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.model.Livro;
 import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.model.Reserva;
@@ -23,6 +24,9 @@ public class LivroService {
 	
 	@Inject
 	private ReservaService reservaService;
+	
+	@Inject
+	private ClienteService clienteService;
 	
 	@Inject
 	private MovimentacaoDAO mvtDao;
@@ -63,9 +67,14 @@ public class LivroService {
 	}
 
 	public void reservar(Long idLivro, String cpf) throws Exception {
+		Cliente cliente = clienteService.buscarPorCpf(cpf);
 		Livro lvr = buscarLivroPorId(idLivro);
+		
 		if(lvr.getEstadoLivro() == EstadoLivro.RESERVADO) {
 			throw new Exception("Livro já está reservado.");
+		}
+		if(lvr.getEstadoLivro() == EstadoLivro.EMPRESTADO) {
+			throw new Exception("Livro está emprestado.");
 		}
 		
 		Reserva reserva = new Reserva(lvr, cpf, LocalDate.now().plusDays(5));
@@ -78,4 +87,9 @@ public class LivroService {
 	public Long quantidade() {
 		return dao.quantidadeLivros();
 	}
+
+	public Livro buscarPorIssn(String codigoLivro) {
+		return dao.buscarLivroPorIssn(codigoLivro);
+	}
+
 }

@@ -30,13 +30,16 @@ public class EmprestimoService {
 	private MovimentacaoDAO mvtDao;
 
 	public void realizarEmprestimo(Long idCliente, String codigoLivro) throws Exception {
-		// TODO: bloquear emprestimo de livro já emprestado
 		Cliente cl = clienteService.buscarPorId(idCliente);
 		Livro livro = livroService.buscarLivroPorIsbn(codigoLivro);
+		//TODO: verificar po issn tbm
+		if(livro.getEstadoLivro() == EstadoLivro.EMPRESTADO) {
+			throw new Exception("Livro já está emprestado.");
+		}
+		
 		boolean estaReservado = livro.getEstadoLivro() == EstadoLivro.RESERVADO;
 		//verifica se livro está reservado, se sim, verifica se foi esse cliente que reservou
 		if (estaReservado && !reservaService.verificarReserva(cl, livro)) {
-			
 			throw new Exception("Livro está reservado para outra pessoa.");
 		} else {
 			if(estaReservado) {
@@ -57,9 +60,14 @@ public class EmprestimoService {
 		}
 	}
 
-	public void devolverLivro(String codigoLivro) {
+	public void devolverLivro(String codigoLivro) throws Exception {
 		Livro lvr = livroService.buscarLivroPorIsbn(codigoLivro);
+		if(lvr == null) {
+			lvr = livroService.buscarPorIssn(codigoLivro);
+		}
+		
 		Emprestimo empr = lvr.getEmprestimo();
+		if(empr == null) throw new Exception("Não foi encontrado empréstimo deste livro.");
 		empr.getCliente().getEmprestimos().remove(empr);
 		lvr.setEstadoLivro(EstadoLivro.DISPONIVEL);
 		Movimentacao mvt = new Movimentacao(null, empr.getCliente().getId(), lvr.getId(), TiposMovimentacao.DEVOLUCAO, LocalDateTime.now());
@@ -71,6 +79,7 @@ public class EmprestimoService {
 	public Emprestimo renovarEmprestimo(String codigoLivro) {
 		Livro lvr = livroService.buscarLivroPorIsbn(codigoLivro);
 		Emprestimo empr = lvr.getEmprestimo();
+		// adiciona mais 15 dias na data de devolução
 		empr.setDataDevolucao(empr.getDataDevolucao().plusDays(15));
 		return dao.renovarEmprestimo(empr);
 	}

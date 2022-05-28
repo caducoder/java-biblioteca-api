@@ -32,7 +32,7 @@ public class ClienteService {
 		return dao.listar();
 	}
 	
-	public Cliente buscarPorCpf(String cpf) {
+	public Cliente buscarPorCpf(String cpf) throws Exception {
 		return dao.buscarPorCpf(cpf);
 	}
 

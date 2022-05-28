@@ -19,7 +19,7 @@ public class LivroDAO {
 		try {
 			em.persist(livro);
 		} catch (Exception e) {
-			throw new Exception("Livro já está registrado no sistema.");
+			throw new Exception("Livro jï¿½ estï¿½ registrado no sistema.");
 		}
 	}
 	
@@ -72,6 +72,19 @@ public class LivroDAO {
 		String jpql = "SELECT COUNT(l) FROM Livro l";
 		
 		return (Long) em.createQuery(jpql).getSingleResult();
+	}
+
+	public Livro buscarLivroPorIssn(String issn) {
+		String jpql = "SELECT l FROM Livro l WHERE issn=:issn";
+		Livro lvr = null;
+		
+		try {
+			lvr = em.createQuery(jpql, Livro.class).setParameter("issn", issn).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+		
+		return lvr;
 	}
 	
 }

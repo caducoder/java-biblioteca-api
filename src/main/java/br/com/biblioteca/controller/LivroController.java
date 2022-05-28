@@ -43,7 +43,7 @@ public class LivroController {
 	public Response listarLivros() {
 		return Response.ok(livroService.listar()).build();
 	}
-	
+
 	@GET
 	@Path("/quantidade")
 	@Produces(value = MediaType.TEXT_PLAIN)
@@ -71,7 +71,7 @@ public class LivroController {
 		try {
 			livroService.reservar(idLivro, cpf);
 			
-			return Response.ok("Reserva registrada com sucesso.").build();
+			return Response.ok("Livro reservado com sucesso!").build();
 		} catch (Exception e) {
 			return Response.status(Status.FORBIDDEN).entity(e.getMessage()).build();
 		}
