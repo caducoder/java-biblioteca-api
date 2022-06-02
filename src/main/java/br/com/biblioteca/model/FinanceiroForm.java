@@ -23,6 +23,8 @@ public class FinanceiroForm {
 	
 	@Column(name = "tipo_operacao")
 	private String tipoOperacao;
+	
+	private String assunto;
 
 	private BigDecimal valor;
 	
@@ -31,8 +33,9 @@ public class FinanceiroForm {
 	public FinanceiroForm() {
 	}
 	
-	public FinanceiroForm(String fileName, String tipoOperacao, BigDecimal valor, LocalDate data) {
+	public FinanceiroForm(String fileName, String assunto, String tipoOperacao, BigDecimal valor, LocalDate data) {
 		this.fileName = fileName;
+		this.assunto = assunto;
 		this.tipoOperacao = tipoOperacao;
 		this.valor = valor;
 		this.data = data;
@@ -76,6 +79,14 @@ public class FinanceiroForm {
 
 	public void setData(LocalDate data) {
 		this.data = data;
+	}
+
+	public String getAssunto() {
+		return assunto;
+	}
+
+	public void setAssunto(String assunto) {
+		this.assunto = assunto;
 	}
 	
 

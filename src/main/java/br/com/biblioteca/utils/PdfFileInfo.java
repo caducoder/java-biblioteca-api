@@ -9,8 +9,8 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
 public class PdfFileInfo {
 
-	@FormParam("filename")
-	private String filename;
+	@FormParam("assunto")
+	private String assunto;
 	
 	@FormParam("valor")
 	private BigDecimal valor;
@@ -23,12 +23,12 @@ public class PdfFileInfo {
 	public PdfFileInfo() {
 	}
 
-	public String getFilename() {
-		return filename;
+	public String getAssunto() {
+		return assunto;
 	}
 
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setAssunto(String assunto) {
+		this.assunto = assunto;
 	}
 
 	public byte[] getDados() {
@@ -55,6 +55,11 @@ public class PdfFileInfo {
 
 	public void setTipoOperacao(String tipo) {
 		this.tipo = tipo;
+	}
+
+	@Override
+	public String toString() {
+		return "PdfFileInfo [assunto=" + assunto + ", valor=" + valor + ", tipo=" + tipo + " ...";
 	}
 	
 	

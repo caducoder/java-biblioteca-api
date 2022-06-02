@@ -55,12 +55,13 @@ public class ClienteController {
 	@Path("{cpf}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorCpf(@PathParam("cpf") String cpf) {
-		Cliente cl = clienteService.buscarPorCpf(cpf);
-		if(cl == null) {
-			return Response.status(404).build();
+		Cliente cl;
+		try {
+			cl = clienteService.buscarPorCpf(cpf);
+			return Response.ok(cl).build();
+		} catch (Exception e) {
+			return Response.status(404).entity(e.getMessage()).build();
 		}
-		
-		return Response.ok(cl).build();
 	}
 	
 	@PUT

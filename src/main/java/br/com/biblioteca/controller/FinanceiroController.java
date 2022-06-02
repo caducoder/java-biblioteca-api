@@ -34,7 +34,7 @@ public class FinanceiroController {
 	@Inject
 	private FinanceiroService financeiroService;
 	
-	// cria pasta para guardar os pdfs, caso não exista
+	// cria pasta para guardar os pdfs, caso nï¿½o exista
 	{
 		File f = new File(BASE_DIR);
 		if(!f.exists()) {
@@ -45,13 +45,13 @@ public class FinanceiroController {
 	@POST
 	@Secured
 	@Path("/upload")
-	@Consumes("multipart/form-data")
+	@Consumes(value = MediaType.MULTIPART_FORM_DATA)
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response uploadNotaFiscal(@MultipartForm PdfFileInfo formData) {
 		
 		UUID uuid = UUID.randomUUID();
 		
-		String nomeArq = formData.getFilename() + uuid.toString();
+		String nomeArq = uuid.toString();
 		
 		String caminho_pasta = BASE_DIR + nomeArq + ".pdf";
 		
@@ -59,14 +59,14 @@ public class FinanceiroController {
 			// salvando pdf na pasta
 			writeFile(formData.getDados(), caminho_pasta);
 	
-			FinanceiroForm fin = new FinanceiroForm(nomeArq, formData.getTipoOperacao(), formData.getValor(), LocalDate.now());
+			FinanceiroForm fin = new FinanceiroForm(nomeArq, formData.getAssunto(), formData.getTipoOperacao(), formData.getValor(), LocalDate.now());
 
 			//salvando dados do financeiro no banco de dados
 			financeiroService.salvarFinanca(fin);
-
+			
 			return Response.status(200)
 				    .entity("Financeiro registrado com sucesso.").build();
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 			
 			e.printStackTrace();
 			return Response.status(400).entity(e.getMessage()).build();
