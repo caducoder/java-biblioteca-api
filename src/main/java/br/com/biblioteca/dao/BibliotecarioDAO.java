@@ -52,4 +52,9 @@ public class BibliotecarioDAO {
 		
 		return bi;
 	}
+
+	public String buscarNomePorEmail(String email) {
+		String jpql = "SELECT b.nome FROM Bibliotecario b WHERE email=:email";
+		return em.createQuery(jpql, String.class).setParameter("email", email).getSingleResult();
+	}
 }

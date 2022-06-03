@@ -30,4 +30,9 @@ public class AdminDAO {
 		return ad;
 	}
 
+	public String buscarNomePorEmail(String email) {
+		String jpql = "SELECT a.nome FROM Administrador a WHERE email=:email";
+		return em.createQuery(jpql, String.class).setParameter("email", email).getSingleResult();
+	}
+
 }

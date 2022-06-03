@@ -1,5 +1,7 @@
 package br.com.biblioteca.service;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -19,14 +21,16 @@ public class FinanceiroService {
 	public String getNotaFiscal(Long id) {
 		return dao.getNotaFiscalName(id);
 	}
+	
+	public List<FinanceiroForm> getFinancas() {
+		return dao.listarFinancas();
+	}
 
 //	public FinanceiroForm getFinanca(Long id) {
 //		return dao.getFinanca(id);
 //	}
 //
-//	public List<FinanceiroForm> getFinancas() {
-//		return dao.getFinancas();
-//	}
+	
 
 
 }

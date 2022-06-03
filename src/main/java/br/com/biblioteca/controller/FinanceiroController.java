@@ -34,7 +34,7 @@ public class FinanceiroController {
 	@Inject
 	private FinanceiroService financeiroService;
 	
-	// cria pasta para guardar os pdfs, caso n�o exista
+	// cria pasta para guardar os pdfs, caso nao exista
 	{
 		File f = new File(BASE_DIR);
 		if(!f.exists()) {
@@ -91,12 +91,18 @@ public class FinanceiroController {
 		          "Access-Control-Allow-Headers",
 		          "X-Requested-With,Host,User-Agent,Accept,Accept-Language,Accept-Encoding,Accept-Charset,Keep-Alive,Connection,Referer,Origin");
 			responseBuilder.header("Content-Disposition", "filename="+nomeDoArquivo+".pdf");
+			
 			return responseBuilder.build();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
-		
+	}
+	
+	@GET
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public Response listarNotas() {
+		return Response.ok(financeiroService.getFinancas()).build();
 	}
 	
 	private void writeFile(byte[] content, String filename) throws IOException {

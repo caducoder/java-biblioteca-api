@@ -40,8 +40,17 @@ public class LoginController {
 	public Response autenticarUsuario(Credentials credenciais) {
 		AuthResponse authParams = new AuthResponse();
 		try {
+			int codigo = authenticate(credenciais.getEmail(), credenciais.getSenha());
+			
+			// adiciona o nome do usuário na resposta
+			if(codigo == 2200) {
+				authParams.setUsername(bibliotecarioService.buscarNomePorEmail(credenciais.getEmail()));
+			} else {
+				authParams.setUsername(adminService.buscarNomePorEmail(credenciais.getEmail()));
+			}
+			
 			// adiciona na resposta o código equivalente a função do usuario: admin ou bibliotecario
-			authParams.addRole(authenticate(credenciais.getEmail(), credenciais.getSenha()));
+			authParams.addRole(codigo);
 			
 			// emitindo token para o email recebido
 			String token = issueToken(credenciais.getEmail());

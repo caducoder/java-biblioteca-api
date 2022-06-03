@@ -28,8 +28,8 @@ public class FinanceiroDAO {
 		return em.createQuery(jpql, String.class).setParameter("id", id).getSingleResult();
 	}
 	
-	public List<FinanceiroForm> getFinancas() {
-		String jpql = "SELECT f FROM Financeiro f";
+	public List<FinanceiroForm> listarFinancas() {
+		String jpql = "SELECT f FROM FinanceiroForm f";
 		
 		return em.createQuery(jpql, FinanceiroForm.class).getResultList();
 	}

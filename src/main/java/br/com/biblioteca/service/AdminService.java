@@ -27,4 +27,8 @@ public class AdminService {
 		
 		return false;
 	}
+
+	public String buscarNomePorEmail(String email) {
+		return dao.buscarNomePorEmail(email);
+	}
 }

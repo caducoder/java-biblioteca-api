@@ -10,6 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
+import br.com.biblioteca.utils.CustomLocalDateSerializer;
+
 @Entity
 @Table(name = "financas")
 public class FinanceiroForm {
@@ -28,6 +35,8 @@ public class FinanceiroForm {
 
 	private BigDecimal valor;
 	
+	@JsonSerialize(using = CustomLocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate data;
 
 	public FinanceiroForm() {

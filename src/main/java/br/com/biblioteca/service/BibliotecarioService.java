@@ -36,6 +36,10 @@ public class BibliotecarioService {
 	public Bibliotecario buscarPorCpf(String cpf) {
 		return dao.buscarPorCpf(cpf);
 	}
+	
+	public String buscarNomePorEmail(String email) {
+		return dao.buscarNomePorEmail(email);
+	}
 
 	public void remover(Long id) {
 		dao.remover(id);
