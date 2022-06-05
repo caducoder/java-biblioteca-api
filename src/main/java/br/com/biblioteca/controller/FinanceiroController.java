@@ -43,7 +43,7 @@ public class FinanceiroController {
 	}
 	
 	@POST
-	@Secured
+	//@Secured
 	@Path("/upload")
 	@Consumes(value = MediaType.MULTIPART_FORM_DATA)
 	@Produces(value = MediaType.TEXT_PLAIN)
@@ -75,7 +75,7 @@ public class FinanceiroController {
 	}
 	
 	@GET
-	@Secured
+	//@Secured
 	@Path("/download/{id}")
 	@Produces("application/pdf")
 	public Response downloadNotaFiscal(@PathParam("id") Long id) {

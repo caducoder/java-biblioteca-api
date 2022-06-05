@@ -52,10 +52,10 @@ public class LivroController {
 	}
 	
 	@GET
-	@Path("{isbn}")
+	@Path("{codigo}")
 	@Produces(value = MediaType.APPLICATION_JSON)
-	public Response buscarPorIsbn(@PathParam("isbn") String isbn) {
-		Livro lvr = livroService.buscarLivroPorIsbn(isbn);
+	public Response buscarPorCodigo(@PathParam("codigo") String codigo) {
+		Livro lvr = livroService.buscarLivroPorCodigo(codigo);
 		
 		if(lvr == null) {
 			return Response.status(404).build();

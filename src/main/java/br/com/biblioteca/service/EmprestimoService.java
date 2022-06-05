@@ -31,7 +31,7 @@ public class EmprestimoService {
 
 	public void realizarEmprestimo(Long idCliente, String codigoLivro) throws Exception {
 		Cliente cl = clienteService.buscarPorId(idCliente);
-		Livro livro = livroService.buscarLivroPorIsbn(codigoLivro);
+		Livro livro = livroService.buscarLivroPorCodigo(codigoLivro);
 		//TODO: verificar po issn tbm
 		if(livro.getEstadoLivro() == EstadoLivro.EMPRESTADO) {
 			throw new Exception("Livro já está emprestado.");
@@ -61,10 +61,7 @@ public class EmprestimoService {
 	}
 
 	public void devolverLivro(String codigoLivro) throws Exception {
-		Livro lvr = livroService.buscarLivroPorIsbn(codigoLivro);
-		if(lvr == null) {
-			lvr = livroService.buscarPorIssn(codigoLivro);
-		}
+		Livro lvr = livroService.buscarLivroPorCodigo(codigoLivro);
 		
 		Emprestimo empr = lvr.getEmprestimo();
 		if(empr == null) throw new Exception("Não foi encontrado empréstimo deste livro.");
@@ -77,7 +74,7 @@ public class EmprestimoService {
 	}
 
 	public Emprestimo renovarEmprestimo(String codigoLivro) {
-		Livro lvr = livroService.buscarLivroPorIsbn(codigoLivro);
+		Livro lvr = livroService.buscarLivroPorCodigo(codigoLivro);
 		Emprestimo empr = lvr.getEmprestimo();
 		// adiciona mais 15 dias na data de devolução
 		empr.setDataDevolucao(empr.getDataDevolucao().plusDays(15));

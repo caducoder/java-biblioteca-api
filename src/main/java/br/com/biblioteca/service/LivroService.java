@@ -42,8 +42,12 @@ public class LivroService {
 		return dao.listar();
 	}
 	
-	public Livro buscarLivroPorIsbn(String isbn) {
-		return dao.buscarLivroPorIsbn(isbn);
+	public Livro buscarLivroPorCodigo(String codigo) {
+		Livro lvr = dao.buscarLivroPorIsbn(codigo);
+		
+		if(lvr == null) lvr = dao.buscarLivroPorIssn(codigo);
+		
+		return lvr;
 	}
 	
 	public Livro buscarLivroPorId(Long idLivro) {
@@ -86,10 +90,6 @@ public class LivroService {
 
 	public Long quantidade() {
 		return dao.quantidadeLivros();
-	}
-
-	public Livro buscarPorIssn(String codigoLivro) {
-		return dao.buscarLivroPorIssn(codigoLivro);
 	}
 
 }
