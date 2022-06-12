@@ -32,7 +32,7 @@ public class EmprestimoService {
 	public void realizarEmprestimo(Long idCliente, String codigoLivro) throws Exception {
 		Cliente cl = clienteService.buscarPorId(idCliente);
 		Livro livro = livroService.buscarLivroPorCodigo(codigoLivro);
-		//TODO: verificar po issn tbm
+		
 		if(livro.getEstadoLivro() == EstadoLivro.EMPRESTADO) {
 			throw new Exception("Livro já está emprestado.");
 		}

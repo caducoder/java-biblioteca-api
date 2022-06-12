@@ -4,6 +4,7 @@ public enum TiposMovimentacao {
 	CADASTRO_LIVRO,
 	EMPRESTIMO,
 	DEVOLUCAO,
+	RESERVA,
 	EXCLUSAO_LIVRO,
 	ALTERACAO_LIVRO,
 	
