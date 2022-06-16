@@ -1,6 +1,7 @@
 package br.com.biblioteca.controller;
 
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -25,10 +26,24 @@ public class EmprestimoController {
 	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro) {
 		try {
 			emprestimoService.realizarEmprestimo(idCliente, codigoLivro);
-			return Response.ok("Empréstimo realizado com sucesso.").build();
+			return Response.ok("Emprï¿½stimo realizado com sucesso.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(403).entity(e.getMessage()).build();
+		}
+	}
+	
+	@GET
+	@Path("{codigoLivro}")
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public Response buscarEmprestimoPorCodigoLivro(@PathParam("codigoLivro") String codLivro) {
+		
+		try {
+			Emprestimo empr = emprestimoService.buscarPorCodigoLivro(codLivro);
+			
+			return Response.ok(empr).build();
+		} catch (Exception e) {
+			return Response.status(404).entity("Emprï¿½stimo nï¿½o encontrado.").build();
 		}
 		
 	}
@@ -40,12 +55,10 @@ public class EmprestimoController {
 	public Response realizarDevolucao(@PathParam("codigoLivro") String codigoLivro) {
 		try {
 			emprestimoService.devolverLivro(codigoLivro);
-			return Response.ok().entity("Devolução registrada com sucesso.").build();
+			return Response.ok().entity("Devoluï¿½ï¿½o registrada com sucesso.").build();
 		} catch (Exception e) {
 			return Response.status(404).entity(e.getMessage()).build();
-			
 		}
-		
 	}
 	
 	@GET

@@ -43,5 +43,11 @@ public class RelatorioMvtController {
 		return Response.ok(mvtDao.listaRelatorioEmprestimo()).build();
 	}
 	
+	@GET
+	@Path("/reserva")
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public Response relatorioReserva() {
+		return Response.ok(mvtDao.listaRelatorioReserva()).build();
+	}
 	
 }

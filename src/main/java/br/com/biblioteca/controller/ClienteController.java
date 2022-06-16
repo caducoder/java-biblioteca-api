@@ -58,18 +58,39 @@ public class ClienteController {
 		Cliente cl;
 		try {
 			cl = clienteService.buscarPorCpf(cpf);
+			
 			return Response.ok(cl).build();
 		} catch (Exception e) {
 			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
 	
+	@GET
+	@Secured
+	@Path("/cl/{id}")
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public Response buscarPorId(@PathParam("id") Long id) {
+		Cliente cl = clienteService.buscarPorId(id);
+		
+		if(cl != null) {
+			return Response.ok(cl).build();
+		} else {
+			return Response.status(404).entity("{\"error\": \"Cliente n�o encontrado.\"}").build();
+		}
+	}
+	
 	@PUT
 	@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
+	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response alterarCliente(Cliente nCliente) {
-		clienteService.alterar(nCliente);
-		return Response.ok().build();
+		try {
+			clienteService.alterar(nCliente);
+			return Response.ok("Cliente atualizado com sucesso.").build();
+		} catch (Exception e) {
+			return Response.status(400).entity(e.getMessage()).build();
+		}
+		
 	}
 	
 	@DELETE

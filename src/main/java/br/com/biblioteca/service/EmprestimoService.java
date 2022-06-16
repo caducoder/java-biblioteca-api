@@ -85,4 +85,12 @@ public class EmprestimoService {
 		return dao.contarEmprestimos();
 	}
 
+	public Emprestimo buscarPorCodigoLivro(String codLivro) {
+		Livro livro = livroService.buscarLivroPorCodigo(codLivro);
+		Emprestimo empr = dao.buscarEmprestimoPorCodigoLivro(livro);
+		
+		
+		return empr;
+	}
+
 }
