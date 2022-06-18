@@ -19,7 +19,13 @@ public class AdminController {
 	@POST
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response cadastrarAdmin(Administrador admin) {
-		adminService.cadastrar(admin);
-		return Response.ok().build();
+		try {
+			adminService.cadastrar(admin);
+			return Response.status(201).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(400).entity(e.getMessage()).build();
+		}
+		
 	}
 }

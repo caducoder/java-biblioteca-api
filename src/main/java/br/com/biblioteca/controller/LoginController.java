@@ -67,10 +67,10 @@ public class LoginController {
 	// método que verifica se o usuário é bibliotecario ou administrador, e retorna o código equivalente
 	private int authenticate(String email, String senha) throws Exception {
 		
-		if(bibliotecarioService.loginBiblio(email, senha)) {
+		if(bibliotecarioService.verificaLogin(email, senha)) {
 			return 2200;// código para bibliotecario
 		}
-		if(adminService.loginAdmin(email, senha)) {
+		if(adminService.verificaLogin(email, senha)) {
 			return 2205;// código para admin
 		}
 		//caso não encontre nenhum dos dois

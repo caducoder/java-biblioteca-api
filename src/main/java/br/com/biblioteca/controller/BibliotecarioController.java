@@ -30,10 +30,8 @@ public class BibliotecarioController {
 			return Response.status(201).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			//System.out.println(e.getMessage());
+			return Response.status(400).entity(e.getMessage()).build();
 		}
-		
-		return Response.status(400).build();
 	}
 	
 	@GET

@@ -41,14 +41,17 @@ public class BibliotecarioService {
 		return dao.buscarNomePorEmail(email);
 	}
 
-	public void remover(Long id) {
-		dao.remover(id);
-		Movimentacao mvt = new Movimentacao(id, null, null, TiposMovimentacao.EXCLUSAO_BIBLIOTECARIO, LocalDateTime.now());
-		
-		mvtDao.registrar(mvt);
+	public Boolean remover(Long id) {
+		boolean foiRemovido = dao.remover(id);
+		if(foiRemovido) {
+			Movimentacao mvt = new Movimentacao(id, null, null, TiposMovimentacao.EXCLUSAO_BIBLIOTECARIO, LocalDateTime.now());
+			mvtDao.registrar(mvt);
+			return true;
+		}
+		return false;
 	}
 	
-	public Boolean loginBiblio(String email, String senha) {
+	public Boolean verificaLogin(String email, String senha) {
 		Bibliotecario bbt = dao.buscarBiblioLogin(email);
 		if(bbt != null) {
 			return CryptUtil.checkPass(senha, bbt.getSenha());

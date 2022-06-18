@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import br.com.biblioteca.model.Bibliotecario;
+import br.com.biblioteca.utils.CryptUtil;
 
 @Stateless
 public class BibliotecarioDAO {
@@ -34,9 +35,13 @@ public class BibliotecarioDAO {
 		return bi;
 	}
 
-	public void remover(Long id) {
+	public Boolean remover(Long id) {
 		Bibliotecario bi = em.find(Bibliotecario.class, id);
-		em.remove(bi);
+		if(bi != null) {
+			em.remove(bi);
+			return true;
+		} 
+		return false;
 	}
 
 	public Bibliotecario buscarBiblioLogin(String email) {
@@ -56,5 +61,17 @@ public class BibliotecarioDAO {
 	public String buscarNomePorEmail(String email) {
 		String jpql = "SELECT b.nome FROM Bibliotecario b WHERE email=:email";
 		return em.createQuery(jpql, String.class).setParameter("email", email).getSingleResult();
+	}
+	
+	public void alterar(Bibliotecario nBiblio) {
+		Bibliotecario biblioAtual = buscarPorCpf(nBiblio.getCpf());
+		
+		biblioAtual.setNome(nBiblio.getNome());
+		biblioAtual.setRg(nBiblio.getRg());
+		biblioAtual.setEndereco(nBiblio.getEndereco());
+		biblioAtual.setEmail(nBiblio.getEmail());
+		biblioAtual.setTelefone(nBiblio.getTelefone());
+		
+		em.merge(biblioAtual);
 	}
 }
