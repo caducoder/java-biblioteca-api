@@ -24,10 +24,11 @@ public class BibliotecarioController {
 	@POST
 	@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
+	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response cadastrarBibliotecario(Bibliotecario bibliotecario) {
 		try {
 			bibliotecarioService.cadastrarBibliotecario(bibliotecario);
-			return Response.status(201).build();
+			return Response.status(201).entity("Funcionário cadastrado com sucesso!").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(400).entity(e.getMessage()).build();
@@ -47,6 +48,7 @@ public class BibliotecarioController {
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorCpf(@PathParam("cpf") String cpf) {
 		Bibliotecario cl = bibliotecarioService.buscarPorCpf(cpf);
+		
 		if(cl == null) {
 			return Response.status(404).build();
 		}
@@ -59,6 +61,7 @@ public class BibliotecarioController {
 	@Path("{id}")
 	public Response removerBibliotecario(@PathParam("id") Long id) {
 		bibliotecarioService.remover(id);
+		
 		return Response.ok().build();
 	}
 }

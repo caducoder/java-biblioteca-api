@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import br.com.biblioteca.model.Administrador;
+import br.com.biblioteca.model.Bibliotecario;
+import br.com.biblioteca.model.Usuario;
 
 @Stateless
 public class AdminDAO {
@@ -21,6 +23,7 @@ public class AdminDAO {
 	public Administrador buscarAdminLogin(String email) {
 		String jpql = "SELECT a FROM Administrador a WHERE email=:email";
 		Administrador ad = null;
+		
 		try {
 			ad = em.createQuery(jpql, Administrador.class)
 					.setParameter("email", email)
@@ -34,6 +37,7 @@ public class AdminDAO {
 
 	public String buscarNomePorEmail(String email) {
 		String jpql = "SELECT a.nome FROM Administrador a WHERE email=:email";
+		
 		return em.createQuery(jpql, String.class).setParameter("email", email).getSingleResult();
 	}
 
@@ -46,11 +50,13 @@ public class AdminDAO {
 	public Administrador buscarPorCpf(String cpf) {
 		String jpql = "SELECT a FROM Administrador a WHERE cpf=:cpf";
 		Administrador adm = null;
+		
 		try {
 			adm = em.createQuery(jpql, Administrador.class).setParameter("cpf", cpf).getSingleResult();
 		} catch (RuntimeException e) {
 			return null;
 		}
+		
 		return adm;
 	}
 	
@@ -61,7 +67,27 @@ public class AdminDAO {
 			em.remove(adm);
 			return true;
 		}
+		
 		return false;
+	}
+
+	public void alterar(Administrador admAtual, Usuario user) {
+		admAtual.setNome(user.getNome());
+		admAtual.setRg(user.getRg());
+		admAtual.setEndereco(user.getEndereco());
+		admAtual.setEmail(user.getEmail());
+		admAtual.setTelefone(user.getTelefone());
+		
+		em.merge(admAtual);
+	}
+
+	public void salvarNovaSenha(Administrador adm) {
+		em.merge(adm);
+	}
+
+	public Administrador buscarPorId(Long idAdmin) {
+		
+		return em.find(Administrador.class, idAdmin);
 	}
 
 }

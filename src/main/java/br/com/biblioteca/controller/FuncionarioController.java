@@ -5,17 +5,20 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.Administrador;
 import br.com.biblioteca.model.Bibliotecario;
+import br.com.biblioteca.model.Usuario;
 import br.com.biblioteca.service.AdminService;
 import br.com.biblioteca.service.BibliotecarioService;
 
@@ -57,8 +60,51 @@ public class FuncionarioController {
 		return Response.status(404).build();
 	}
 	
+	@PUT
+	@Secured
+	@Consumes(value = MediaType.APPLICATION_JSON)
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public Response alterarFuncionario(Usuario user) {
+		Bibliotecario bbt = bibliotecarioService.buscarPorCpf(user.getCpf());
+		try {
+			if(bbt != null) {
+				bibliotecarioService.alterar(bbt, user);
+			} else {
+				Administrador adm = adminService.buscarPorCpf(user.getCpf());
+				adminService.alterar(adm, user);
+			}
+			return Response.ok("Usu�rio alterado com sucesso.").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(400).entity(e.getMessage()).build();
+		}
+	}
+	
+	@POST
+	@Secured
+	@Path("{idFuncionario}")
+	@Consumes(value = MediaType.TEXT_PLAIN)
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public Response mudarSenha(@PathParam("idFuncionario") Long id, String novaSenha) {
+		Bibliotecario bbt = bibliotecarioService.buscarPorId(id);
+		
+		try {
+			if(bbt != null) {
+				bibliotecarioService.alterarSenha(bbt, novaSenha);
+			} else {
+				Administrador adm = adminService.buscarPorId(id);
+				adminService.alterarSenha(adm, novaSenha);
+			}
+			
+			return Response.ok("Senha alterada com sucesso.").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(400).entity(e.getMessage()).build();
+		}
+	}
+	
 	@DELETE
-	//@Secured
+	@Secured
 	@Path("{id}")
 	public Response removerFuncionario(@PathParam("id") Long id) {
 		if(!bibliotecarioService.remover(id)) {
