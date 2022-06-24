@@ -34,21 +34,22 @@ public class EmprestimoService {
 		Livro livro = livroService.buscarLivroPorCodigo(codigoLivro);
 		
 		if(livro.getEstadoLivro() == EstadoLivro.EMPRESTADO) {
-			throw new Exception("Livro já está emprestado.");
+			throw new Exception("Livro jï¿½ estï¿½ emprestado.");
 		}
 		
 		boolean estaReservado = livro.getEstadoLivro() == EstadoLivro.RESERVADO;
-		//verifica se livro está reservado, se sim, verifica se foi esse cliente que reservou
+		//verifica se livro estï¿½ reservado, se sim, verifica se foi esse cliente que reservou
 		if (estaReservado && !reservaService.verificarReserva(cl, livro)) {
-			throw new Exception("Livro está reservado para outra pessoa.");
+			throw new Exception("Livro estï¿½ reservado para outra pessoa.");
 		} else {
 			if(estaReservado) {
-				//remove reserva já que o cliente fez o emprestimo
+				//remove reserva jï¿½ que o cliente fez o emprestimo
 				reservaService.removerReserva(livro);
 			}
 			Emprestimo emprestimo = new Emprestimo();
 			
 			livro.setEstadoLivro(EstadoLivro.EMPRESTADO);
+			emprestimo.setNomeCliente(cl.getNome());
 			emprestimo.setLivro(livro);
 			emprestimo.setEmprestadoEm(LocalDate.now());
 			emprestimo.setDataDevolucao(LocalDate.now().plusDays(15));
@@ -62,9 +63,10 @@ public class EmprestimoService {
 
 	public void devolverLivro(String codigoLivro) throws Exception {
 		Livro lvr = livroService.buscarLivroPorCodigo(codigoLivro);
-		
 		Emprestimo empr = lvr.getEmprestimo();
-		if(empr == null) throw new Exception("Não foi encontrado empréstimo deste livro.");
+		
+		if(empr == null) throw new Exception("NÃ£o foi encontrado emprÃ©stimo deste livro.");
+		
 		empr.getCliente().getEmprestimos().remove(empr);
 		lvr.setEstadoLivro(EstadoLivro.DISPONIVEL);
 		Movimentacao mvt = new Movimentacao(null, empr.getCliente().getId(), lvr.getId(), TiposMovimentacao.DEVOLUCAO, LocalDateTime.now());
@@ -76,7 +78,8 @@ public class EmprestimoService {
 	public Emprestimo renovarEmprestimo(String codigoLivro) {
 		Livro lvr = livroService.buscarLivroPorCodigo(codigoLivro);
 		Emprestimo empr = lvr.getEmprestimo();
-		// adiciona mais 15 dias na data de devolução
+		
+		// adiciona mais 15 dias na data de devoluï¿½ï¿½o
 		empr.setDataDevolucao(empr.getDataDevolucao().plusDays(15));
 		return dao.renovarEmprestimo(empr);
 	}
@@ -88,7 +91,6 @@ public class EmprestimoService {
 	public Emprestimo buscarPorCodigoLivro(String codLivro) {
 		Livro livro = livroService.buscarLivroPorCodigo(codLivro);
 		Emprestimo empr = dao.buscarEmprestimoPorCodigoLivro(livro);
-		
 		
 		return empr;
 	}
