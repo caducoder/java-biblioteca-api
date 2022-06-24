@@ -19,7 +19,7 @@ public class LivroDAO {
 		try {
 			em.persist(livro);
 		} catch (Exception e) {
-			throw new Exception("Livro jï¿½ estï¿½ registrado no sistema.");
+			throw new Exception("Livro já está registrado no sistema.");
 		}
 	}
 	

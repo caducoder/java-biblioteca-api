@@ -81,6 +81,7 @@ public class FinanceiroController {
 	public Response downloadNotaFiscal(@PathParam("id") Long id) {
 		String nomeDoArquivo = financeiroService.getNotaFiscal(id);
 		File file = new File(BASE_DIR + nomeDoArquivo + ".pdf");
+		
 		try {
 			byte[] bytes = Files.readAllBytes(file.toPath());
 			ResponseBuilder responseBuilder = Response.ok(bytes);

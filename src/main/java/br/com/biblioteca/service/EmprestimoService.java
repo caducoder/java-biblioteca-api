@@ -34,16 +34,16 @@ public class EmprestimoService {
 		Livro livro = livroService.buscarLivroPorCodigo(codigoLivro);
 		
 		if(livro.getEstadoLivro() == EstadoLivro.EMPRESTADO) {
-			throw new Exception("Livro j� est� emprestado.");
+			throw new Exception("Livro já está emprestado.");
 		}
 		
 		boolean estaReservado = livro.getEstadoLivro() == EstadoLivro.RESERVADO;
-		//verifica se livro est� reservado, se sim, verifica se foi esse cliente que reservou
+		//verifica se livro está reservado, se sim, verifica se foi esse cliente que reservou
 		if (estaReservado && !reservaService.verificarReserva(cl, livro)) {
-			throw new Exception("Livro est� reservado para outra pessoa.");
+			throw new Exception("Livro está reservado para outra pessoa.");
 		} else {
 			if(estaReservado) {
-				//remove reserva j� que o cliente fez o emprestimo
+				//remove reserva já que o cliente fez o emprestimo
 				reservaService.removerReserva(livro);
 			}
 			Emprestimo emprestimo = new Emprestimo();
@@ -79,7 +79,7 @@ public class EmprestimoService {
 		Livro lvr = livroService.buscarLivroPorCodigo(codigoLivro);
 		Emprestimo empr = lvr.getEmprestimo();
 		
-		// adiciona mais 15 dias na data de devolu��o
+		// adiciona mais 15 dias na data de devolução
 		empr.setDataDevolucao(empr.getDataDevolucao().plusDays(15));
 		return dao.renovarEmprestimo(empr);
 	}

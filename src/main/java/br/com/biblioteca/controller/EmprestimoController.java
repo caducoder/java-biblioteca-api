@@ -20,13 +20,13 @@ public class EmprestimoController {
 	private EmprestimoService emprestimoService;
 	
 	@GET
-	@Secured
+	//@Secured
 	@Path("{idCliente: [0-9]*}/{codigoLivro}")
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro) {
 		try {
 			emprestimoService.realizarEmprestimo(idCliente, codigoLivro);
-			return Response.ok("Emprï¿½stimo realizado com sucesso.").build();
+			return Response.ok("Empréstimo realizado com sucesso.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(403).entity(e.getMessage()).build();
@@ -43,30 +43,31 @@ public class EmprestimoController {
 			
 			return Response.ok(empr).build();
 		} catch (Exception e) {
-			return Response.status(404).entity("Emprï¿½stimo nï¿½o encontrado.").build();
+			return Response.status(404).entity("Empréstimo não encontrado.").build();
 		}
 		
 	}
 	
 	@GET
-	@Secured
+	//@Secured
 	@Path("devolucao/{codigoLivro}")
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response realizarDevolucao(@PathParam("codigoLivro") String codigoLivro) {
 		try {
 			emprestimoService.devolverLivro(codigoLivro);
-			return Response.ok().entity("Devoluï¿½ï¿½o registrada com sucesso.").build();
+			return Response.ok().entity("Devolução registrada com sucesso.").build();
 		} catch (Exception e) {
 			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
 	
 	@GET
-	@Secured
+	//@Secured
 	@Path("renovar/{codigoLivro}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response renovarEmprestimo(@PathParam("codigoLivro") String codigoLivro) {
 		Emprestimo emprRenovado = emprestimoService.renovarEmprestimo(codigoLivro);
+		
 		return Response.ok(emprRenovado).build();
 	}
 	

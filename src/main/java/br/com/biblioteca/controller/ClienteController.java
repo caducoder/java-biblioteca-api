@@ -23,7 +23,7 @@ public class ClienteController {
 	private ClienteService clienteService;
 	
 	@POST
-	@Secured
+	//@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response cadastrarCliente(Cliente cliente) {
@@ -37,7 +37,7 @@ public class ClienteController {
 	}
 	
 	@GET
-	@Secured
+	//@Secured
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listarClientes() {
 		return Response.ok(clienteService.listarClientes()).build();
@@ -51,7 +51,7 @@ public class ClienteController {
 	}
 	
 	@GET
-	@Secured
+	//@Secured
 	@Path("{cpf}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorCpf(@PathParam("cpf") String cpf) {
@@ -66,7 +66,7 @@ public class ClienteController {
 	}
 	
 	@GET
-	@Secured
+	//@Secured
 	@Path("/cl/{id}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorId(@PathParam("id") Long id) {
@@ -75,12 +75,12 @@ public class ClienteController {
 		if(cl != null) {
 			return Response.ok(cl).build();
 		} else {
-			return Response.status(404).entity("{\"error\": \"Cliente nï¿½o encontrado.\"}").build();
+			return Response.status(404).entity("{\"error\": \"Cliente não encontrado.\"}").build();
 		}
 	}
 	
 	@PUT
-	@Secured
+	//@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response alterarCliente(Cliente nCliente) {
@@ -94,7 +94,7 @@ public class ClienteController {
 	}
 	
 	@DELETE
-	@Secured
+	//@Secured
 	@Path("{id}")
 	public Response removerCliente(@PathParam("id") Long id) {
 		clienteService.remover(id);

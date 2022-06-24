@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.Administrador;
 import br.com.biblioteca.model.Bibliotecario;
 import br.com.biblioteca.model.Usuario;
@@ -61,7 +62,7 @@ public class FuncionarioController {
 	}
 	
 	@PUT
-	@Secured
+	//@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response alterarFuncionario(Usuario user) {
@@ -73,7 +74,7 @@ public class FuncionarioController {
 				Administrador adm = adminService.buscarPorCpf(user.getCpf());
 				adminService.alterar(adm, user);
 			}
-			return Response.ok("Usuï¿½rio alterado com sucesso.").build();
+			return Response.ok("Usuário alterado com sucesso.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(400).entity(e.getMessage()).build();
@@ -81,7 +82,7 @@ public class FuncionarioController {
 	}
 	
 	@POST
-	@Secured
+	//@Secured
 	@Path("{idFuncionario}")
 	@Consumes(value = MediaType.TEXT_PLAIN)
 	@Produces(value = MediaType.TEXT_PLAIN)
@@ -104,7 +105,7 @@ public class FuncionarioController {
 	}
 	
 	@DELETE
-	@Secured
+	//@Secured
 	@Path("{id}")
 	public Response removerFuncionario(@PathParam("id") Long id) {
 		if(!bibliotecarioService.remover(id)) {

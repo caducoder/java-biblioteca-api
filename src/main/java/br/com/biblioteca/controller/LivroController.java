@@ -26,7 +26,7 @@ public class LivroController {
 
 
 	@POST
-	@Secured
+	//@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response cadastrarLivro(Livro livro) {
 		try {
@@ -78,7 +78,7 @@ public class LivroController {
 	}
 	
 	@PUT
-	@Secured
+	//@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response alterarLivro(Livro nLivro) {
 		livroService.alterar(nLivro);
@@ -86,7 +86,7 @@ public class LivroController {
 	}
 	
 	@DELETE
-	@Secured
+	//@Secured
 	@Path("{idLivro}")
 	public Response removerLivro(@PathParam("idLivro") Long idLivro) {
 		livroService.remover(idLivro);

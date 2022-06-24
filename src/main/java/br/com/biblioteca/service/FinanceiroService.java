@@ -26,11 +26,4 @@ public class FinanceiroService {
 		return dao.listarFinancas();
 	}
 
-//	public FinanceiroForm getFinanca(Long id) {
-//		return dao.getFinanca(id);
-//	}
-//
-	
-
-
 }
