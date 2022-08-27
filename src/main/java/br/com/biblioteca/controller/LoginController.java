@@ -44,7 +44,7 @@ public class LoginController {
 			
 			// adiciona o nome do usuário na resposta
 			if(codigo == 2200) {
-				authParams.setUsername(bibliotecarioService.buscarNomePorEmail(credenciais.getEmail()));
+				authParams.setUsername(bibliotecarioService.buscarNomePeloEmail(credenciais.getEmail()));
 			} else {
 				authParams.setUsername(adminService.buscarNomePorEmail(credenciais.getEmail()));
 			}

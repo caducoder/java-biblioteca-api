@@ -6,8 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.biblioteca.dao.BibliotecarioDAO;
-import br.com.biblioteca.dao.MovimentacaoDAO;
+import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.model.Bibliotecario;
 import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.model.Usuario;
@@ -18,67 +17,67 @@ import br.com.biblioteca.utils.TiposMovimentacao;
 public class BibliotecarioService {
 
 	@Inject
-	private BibliotecarioDAO dao;
-	@Inject
-	private MovimentacaoDAO mvtDao;
-	
-	public void cadastrarBibliotecario(Bibliotecario bibliotecario) {
+	private DAOFacade fachada;
+
+	public void cadastrar(Bibliotecario bibliotecario) {
 		bibliotecario.setSenha(CryptUtil.criptografarSenha(bibliotecario.getSenha()));
-		
-		dao.cadastrar(bibliotecario);
-		Movimentacao mvt = new Movimentacao(bibliotecario.getId(), null, null, TiposMovimentacao.CADASTRO_BIBLIOTECARIO, LocalDateTime.now());
-		
-		mvtDao.registrar(mvt);
+
+		fachada.cadastrarBibliotecario(bibliotecario);
+		Movimentacao mvt = new Movimentacao(bibliotecario.getId(), null, null, TiposMovimentacao.CADASTRO_BIBLIOTECARIO,
+				LocalDateTime.now());
+
+		fachada.registrarMovimentacao(mvt);
 	}
-	
-	public List<Bibliotecario> listarBibliotecarios() {
-		return dao.listar();
+
+	public List<Bibliotecario> listar() {
+		return fachada.listarBibliotecario();
 	}
-	
-	public Bibliotecario buscarPorCpf(String cpf) {
-		return dao.buscarPorCpf(cpf);
+
+	public Bibliotecario buscarPeloCpf(String cpf) {
+		return fachada.buscarBibliotecarioPorCpf(cpf);
 	}
-	
-	public Bibliotecario buscarPorId(Long idBiblio) {
-		return dao.buscarPorId(idBiblio);
+
+	public Bibliotecario buscarPeloId(Long idBiblio) {
+		return fachada.buscarBibliotecarioPorId(idBiblio);
 	}
-	
-	public String buscarNomePorEmail(String email) {
-		return dao.buscarNomePorEmail(email);
+
+	public String buscarNomePeloEmail(String email) {
+		return fachada.buscarNomeBibliotecario(email);
 	}
 
 	public Boolean remover(Long id) {
-		boolean foiRemovido = dao.remover(id);
-		
-		if(foiRemovido) {
-			Movimentacao mvt = new Movimentacao(id, null, null, TiposMovimentacao.EXCLUSAO_BIBLIOTECARIO, LocalDateTime.now());
-			mvtDao.registrar(mvt);
+		boolean foiRemovido = fachada.removerBibliotecario(id);
+
+		if (foiRemovido) {
+			Movimentacao mvt = new Movimentacao(id, null, null, TiposMovimentacao.EXCLUSAO_BIBLIOTECARIO,
+					LocalDateTime.now());
+			fachada.registrarMovimentacao(mvt);
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public Boolean verificaLogin(String email, String senha) {
-		Bibliotecario bbt = dao.buscarBiblioLogin(email);
-		
-		if(bbt != null) {
+		Bibliotecario bbt = fachada.buscarLoginBibliotecario(email);
+
+		if (bbt != null) {
 			return CryptUtil.checkPass(senha, bbt.getSenha());
 		}
-		
+
 		return false;
 	}
 
 	public void alterar(Bibliotecario bbt, Usuario user) {
-		dao.alterar(bbt, user);
+		fachada.alterarBibliotecario(bbt, user);
 	}
-	
+
 	public void alterarSenha(Bibliotecario bbt, String novaSenha) {
 		String novaSenhaCriptografada = CryptUtil.criptografarSenha(novaSenha);
-		
+
 		bbt.setSenha(novaSenhaCriptografada);
-		
-		dao.salvarNovaSenha(bbt);
+
+		fachada.salvarSenhaBibliotecario(bbt);
 	}
-	
+
 }

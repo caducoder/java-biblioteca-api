@@ -20,7 +20,7 @@ public class AdminDAO {
 		em.persist(admin);		
 	}
 
-	public Administrador buscarAdminLogin(String email) {
+	public Administrador buscarLogin(String email) {
 		String jpql = "SELECT a FROM Administrador a WHERE email=:email";
 		Administrador ad = null;
 		

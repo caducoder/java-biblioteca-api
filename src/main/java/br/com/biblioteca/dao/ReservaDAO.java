@@ -19,7 +19,7 @@ public class ReservaDAO {
 		em.persist(reserva);
 	}
 
-	public List<Reserva> buscarReservasPorCpf(String cpf) {
+	public List<Reserva> buscarPorCpf(String cpf) {
 		String jpql = "SELECT r FROM Reserva r WHERE reservadoPorCpf=:cpf";
 		List<Reserva> rsv = null;
 		try {
@@ -35,12 +35,12 @@ public class ReservaDAO {
 		return (Long) em.createQuery(jpql).setParameter("cpf", cpf).getSingleResult();
 	}
 	
-	public Reserva buscarReservaPeloLivro(Livro lvr) {
+	public Reserva buscarPeloLivro(Livro lvr) {
 		String jpql = "SELECT r FROM Reserva r WHERE livro=:livro";
 		return em.createQuery(jpql, Reserva.class).setParameter("livro", lvr).getSingleResult();
 	}
 	
-	public void removerReserva(Reserva reserva) {
+	public void remover(Reserva reserva) {
 		em.remove(reserva);
 	}
 

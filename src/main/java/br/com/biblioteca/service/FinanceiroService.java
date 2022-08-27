@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.dao.FinanceiroDAO;
 import br.com.biblioteca.model.FinanceiroForm;
 
@@ -12,18 +13,18 @@ import br.com.biblioteca.model.FinanceiroForm;
 public class FinanceiroService {
 
 	@Inject
-	private FinanceiroDAO dao;
+	private DAOFacade fachada;
 
 	public void salvarFinanca(FinanceiroForm upload) {
-		dao.salvar(upload);
+		fachada.salvarFinanca(upload);
 	}
 	
 	public String getNotaFiscal(Long id) {
-		return dao.getNotaFiscalName(id);
+		return fachada.buscarNomeNotaFiscal(id);
 	}
 	
 	public List<FinanceiroForm> getFinancas() {
-		return dao.listarFinancas();
+		return fachada.listarFinanca();
 	}
 
 }

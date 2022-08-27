@@ -28,7 +28,9 @@ public class BibliotecarioDAO {
 		String jpql = "SELECT b FROM Bibliotecario b WHERE cpf=:cpf";
 		Bibliotecario bi = null;
 		try {
-			bi = em.createQuery(jpql, Bibliotecario.class).setParameter("cpf", cpfbi).getSingleResult();
+			bi = em.createQuery(jpql, Bibliotecario.class)
+					.setParameter("cpf", cpfbi)
+					.getSingleResult();
 		} catch (RuntimeException e) {
 			return null;
 		}
@@ -49,7 +51,7 @@ public class BibliotecarioDAO {
 		return false;
 	}
 
-	public Bibliotecario buscarBiblioLogin(String email) {
+	public Bibliotecario buscarLogin(String email) {
 		String jpql = "SELECT b FROM Bibliotecario b WHERE email=:email";
 		Bibliotecario bi = null;
 		try {
@@ -65,7 +67,9 @@ public class BibliotecarioDAO {
 
 	public String buscarNomePorEmail(String email) {
 		String jpql = "SELECT b.nome FROM Bibliotecario b WHERE email=:email";
-		return em.createQuery(jpql, String.class).setParameter("email", email).getSingleResult();
+		return em.createQuery(jpql, String.class)
+				.setParameter("email", email)
+				.getSingleResult();
 	}
 	
 	public void alterar(Bibliotecario biblioAtual, Usuario user) {

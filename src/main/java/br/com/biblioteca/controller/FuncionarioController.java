@@ -37,7 +37,7 @@ public class FuncionarioController {
 	public Response listarFuncionarios() {
 		List<Object> funcionarios = new ArrayList<>();
 		
-		Collections.addAll(funcionarios, bibliotecarioService.listarBibliotecarios());
+		Collections.addAll(funcionarios, bibliotecarioService.listar());
 		Collections.addAll(funcionarios, adminService.listarAdmins());
 		
 		return Response.ok(funcionarios.toArray()).build();
@@ -48,7 +48,7 @@ public class FuncionarioController {
 	@Path("{cpf}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorCpf(@PathParam("cpf") String cpf) {
-		Bibliotecario biblio = bibliotecarioService.buscarPorCpf(cpf);
+		Bibliotecario biblio = bibliotecarioService.buscarPeloCpf(cpf);
 		if(biblio != null) {
 			return Response.ok(biblio).build();
 		}  
@@ -66,7 +66,7 @@ public class FuncionarioController {
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response alterarFuncionario(Usuario user) {
-		Bibliotecario bbt = bibliotecarioService.buscarPorCpf(user.getCpf());
+		Bibliotecario bbt = bibliotecarioService.buscarPeloCpf(user.getCpf());
 		try {
 			if(bbt != null) {
 				bibliotecarioService.alterar(bbt, user);
@@ -87,7 +87,7 @@ public class FuncionarioController {
 	@Consumes(value = MediaType.TEXT_PLAIN)
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response mudarSenha(@PathParam("idFuncionario") Long id, String novaSenha) {
-		Bibliotecario bbt = bibliotecarioService.buscarPorId(id);
+		Bibliotecario bbt = bibliotecarioService.buscarPeloId(id);
 		
 		try {
 			if(bbt != null) {

@@ -24,7 +24,6 @@ public class LivroController {
 	@Inject
 	private LivroService livroService;
 
-
 	@POST
 	//@Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
@@ -35,7 +34,6 @@ public class LivroController {
 		} catch (Exception e) {
 			return Response.status(403).entity(e.getMessage()).build();
 		}
-		
 	}
 	
 	@GET
@@ -89,7 +87,12 @@ public class LivroController {
 	//@Secured
 	@Path("{idLivro}")
 	public Response removerLivro(@PathParam("idLivro") Long idLivro) {
-		livroService.remover(idLivro);
-		return Response.ok().build();
+		try {
+			livroService.remover(idLivro);
+			return Response.ok().build();
+		} catch (Exception e) {
+			return Response.status(400).entity(e.getMessage()).build();
+		}
+		
 	}
 }

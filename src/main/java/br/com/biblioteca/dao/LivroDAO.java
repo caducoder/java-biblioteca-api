@@ -28,7 +28,7 @@ public class LivroDAO {
 		return em.createQuery(jpql, Livro.class).getResultList();
 	}
 
-	public Livro buscarLivroPorIsbn(String isbnL) {
+	public Livro buscarPorIsbn(String isbnL) {
 		String jpql = "SELECT l FROM Livro l WHERE isbn=:isbn";
 		Livro lvr = null;
 		
@@ -41,7 +41,7 @@ public class LivroDAO {
 		return lvr;
 	}
 	
-	public Livro buscarLivroPorId(Long id) {
+	public Livro buscarPorId(Long id) {
 		return em.find(Livro.class, id);
 	}
 
@@ -68,13 +68,13 @@ public class LivroDAO {
 		em.remove(lvr);
 	}
 
-	public Long quantidadeLivros() {
+	public Long contarLivros() {
 		String jpql = "SELECT COUNT(l) FROM Livro l";
 		
 		return (Long) em.createQuery(jpql).getSingleResult();
 	}
 
-	public Livro buscarLivroPorIssn(String issn) {
+	public Livro buscarPorIssn(String issn) {
 		String jpql = "SELECT l FROM Livro l WHERE issn=:issn";
 		Livro lvr = null;
 		

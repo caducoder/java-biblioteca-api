@@ -14,15 +14,15 @@ public class EmprestimoDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-	public void salvarEmprestimo(Emprestimo empr) {
+	public void salvar(Emprestimo empr) {
 		em.persist(empr);
 	}
 
-	public void removerEmprestimo(Emprestimo empr) {
+	public void remover(Emprestimo empr) {
 		em.remove(empr);
 	}
 
-	public Emprestimo renovarEmprestimo(Emprestimo empr) {
+	public Emprestimo renovar(Emprestimo empr) {
 		return em.merge(empr);
 	}
 
@@ -32,7 +32,7 @@ public class EmprestimoDAO {
 		return (Long) em.createQuery(jpql).getSingleResult();
 	}
 	
-	public Emprestimo buscarEmprestimoPorCodigoLivro(Livro livro) throws NoResultException {
+	public Emprestimo buscarPorCodigoLivro(Livro livro) throws NoResultException {
 		String jpql = "SELECT e FROM Emprestimo e WHERE e.livro =:livro";
 		
 		return em.createQuery(jpql, Emprestimo.class).setParameter("livro", livro).getSingleResult();

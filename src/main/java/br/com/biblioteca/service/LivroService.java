@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.biblioteca.dao.LivroDAO;
-import br.com.biblioteca.dao.MovimentacaoDAO;
+import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.model.Livro;
 import br.com.biblioteca.model.Movimentacao;
@@ -20,7 +20,7 @@ import br.com.biblioteca.utils.TiposMovimentacao;
 public class LivroService {
 
 	@Inject
-	private LivroDAO dao;
+	private DAOFacade fachada;
 	
 	@Inject
 	private ReservaService reservaService;
@@ -28,46 +28,44 @@ public class LivroService {
 	@Inject
 	private ClienteService clienteService;
 	
-	@Inject
-	private MovimentacaoDAO mvtDao;
 	
 	public void cadastrar(Livro livro) throws Exception {
-		dao.cadastrar(livro);
+		fachada.cadastrarLivro(livro);
 		Movimentacao mvt = new Movimentacao(null, null, livro.getId(), TiposMovimentacao.CADASTRO_LIVRO, LocalDateTime.now());
 		
-		mvtDao.registrar(mvt);
+		fachada.registrarMovimentacao(mvt);
 	}
 
 	public List<Livro> listar() {
-		return dao.listar();
+		return fachada.listarLivro();
 	}
 	
 	public Livro buscarLivroPorCodigo(String codigo) {
-		Livro lvr = dao.buscarLivroPorIsbn(codigo);
+		Livro lvr = fachada.buscarLivroPorIsbn(codigo);
 		
-		if(lvr == null) lvr = dao.buscarLivroPorIssn(codigo);
+		if(lvr == null) lvr = fachada.buscarLivroPorIssn(codigo);
 		
 		return lvr;
 	}
 	
 	public Livro buscarLivroPorId(Long idLivro) {
-		return dao.buscarLivroPorId(idLivro);
+		return fachada.buscarLivroPorId(idLivro);
 	}
 
 	public void alterar(Livro nLivro) {
-		dao.alterar(nLivro);
+		fachada.alterarLivro(nLivro);
 		
 		Movimentacao mvt = new Movimentacao(null, null, nLivro.getId(), TiposMovimentacao.ALTERACAO_LIVRO, LocalDateTime.now());
 		
-		mvtDao.registrar(mvt);
+		fachada.registrarMovimentacao(mvt);
 	}
 
 	public void remover(Long idLivro) {
-		dao.remover(idLivro);
+		fachada.removerLivro(idLivro);
 		
 		Movimentacao mvt = new Movimentacao(null, null, null, TiposMovimentacao.EXCLUSAO_LIVRO, LocalDateTime.now());
 		
-		mvtDao.registrar(mvt);
+		fachada.registrarMovimentacao(mvt);
 	}
 
 	public void reservar(Long idLivro, String cpf) throws Exception {
@@ -89,7 +87,8 @@ public class LivroService {
 	}
 
 	public Long quantidade() {
-		return dao.quantidadeLivros();
+		System.out.println("CONTEUDO FACHADA: "+ fachada);
+		return fachada.quantidadeDeLivros();
 	}
 
 }

@@ -1,75 +1,71 @@
 package br.com.biblioteca.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.biblioteca.dao.AdminDAO;
+import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.model.Administrador;
-import br.com.biblioteca.model.Bibliotecario;
-import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.model.Usuario;
 import br.com.biblioteca.utils.CryptUtil;
-import br.com.biblioteca.utils.TiposMovimentacao;
 
 @Stateless
 public class AdminService {
 
 	@Inject
-	private AdminDAO dao;
+	private DAOFacade fachada;
 
 	public void cadastrar(Administrador admin) {
 		admin.setSenha(CryptUtil.criptografarSenha(admin.getSenha()));
-		dao.cadastrar(admin);
+		fachada.cadastrarAdmin(admin);
 	}
 
 	public boolean verificaLogin(String email, String senha) {
-		Administrador admin = dao.buscarAdminLogin(email);
-		
-		if(admin != null) {
+		Administrador admin = fachada.buscarLoginAdmin(email);
+
+		if (admin != null) {
 			return CryptUtil.checkPass(senha, admin.getSenha());
 		}
-		
+
 		return false;
+	}
+	
+	public List<Administrador> listarAdmins() {
+		return fachada.listarAdmin();
 	}
 
 	public String buscarNomePorEmail(String email) {
-		return dao.buscarNomePorEmail(email);
+		return fachada.buscarNomeAdmin(email);
 	}
 
-	public List<Administrador> listarAdmins() {
-		return dao.listar();
-	}
-	
 	public Administrador buscarPorCpf(String cpf) {
-		return dao.buscarPorCpf(cpf);
+		return fachada.buscarAdminPorCpf(cpf);
 	}
-	
+
 	public Administrador buscarPorId(Long idAdmin) {
-		return dao.buscarPorId(idAdmin);
+		return fachada.buscarAdminPorId(idAdmin);
 	}
-	
+
 	public Boolean remover(Long id) {
-		boolean foiRemovido = dao.remover(id);
-		
-		if(foiRemovido) {
+		boolean foiRemovido = fachada.removerAdmin(id);
+
+		if (foiRemovido) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	public void alterar(Administrador adm, Usuario user) {
-		dao.alterar(adm, user);
+		fachada.alterarAdmin(adm, user);
 	}
-	
+
 	public void alterarSenha(Administrador adm, String novaSenha) {
 		String novaSenhaCriptografada = CryptUtil.criptografarSenha(novaSenha);
-		
+
 		adm.setSenha(novaSenhaCriptografada);
-		
-		dao.salvarNovaSenha(adm);
+
+		fachada.salvarSenhaAdmin(adm);
 	}
 }

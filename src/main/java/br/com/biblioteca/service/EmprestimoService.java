@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.dao.EmprestimoDAO;
 import br.com.biblioteca.dao.MovimentacaoDAO;
 import br.com.biblioteca.model.Cliente;
@@ -19,15 +20,14 @@ import br.com.biblioteca.utils.TiposMovimentacao;
 public class EmprestimoService {
 
 	@Inject
-	private EmprestimoDAO dao;
+	private DAOFacade fachada;
+
 	@Inject
 	private ClienteService clienteService;
 	@Inject
 	private LivroService livroService;
 	@Inject
 	private ReservaService reservaService;
-	@Inject
-	private MovimentacaoDAO mvtDao;
 
 	public void realizarEmprestimo(Long idCliente, String codigoLivro) throws Exception {
 		Cliente cl = clienteService.buscarPorId(idCliente);
@@ -56,8 +56,8 @@ public class EmprestimoService {
 			cl.adicionarEmprestimo(emprestimo);
 			Movimentacao mvt = new Movimentacao(null, cl.getId(), livro.getId(), TiposMovimentacao.EMPRESTIMO, LocalDateTime.now());
 			
-			mvtDao.registrar(mvt);
-			dao.salvarEmprestimo(emprestimo);
+			fachada.registrarMovimentacao(mvt);
+			fachada.salvarEmprestimo(emprestimo);
 		}
 	}
 
@@ -71,8 +71,8 @@ public class EmprestimoService {
 		lvr.setEstadoLivro(EstadoLivro.DISPONIVEL);
 		Movimentacao mvt = new Movimentacao(null, empr.getCliente().getId(), lvr.getId(), TiposMovimentacao.DEVOLUCAO, LocalDateTime.now());
 		
-		mvtDao.registrar(mvt);
-		dao.removerEmprestimo(empr);
+		fachada.registrarMovimentacao(mvt);
+		fachada.removerEmprestimo(empr);
 	}
 
 	public Emprestimo renovarEmprestimo(String codigoLivro) {
@@ -81,16 +81,16 @@ public class EmprestimoService {
 		
 		// adiciona mais 15 dias na data de devolução
 		empr.setDataDevolucao(empr.getDataDevolucao().plusDays(15));
-		return dao.renovarEmprestimo(empr);
+		return fachada.renovarEmprestimo(empr);
 	}
 
 	public Long contarEmprestimos() {
-		return dao.contarEmprestimos();
+		return fachada.quantidadeDeEmprestimos();
 	}
 
 	public Emprestimo buscarPorCodigoLivro(String codLivro) {
 		Livro livro = livroService.buscarLivroPorCodigo(codLivro);
-		Emprestimo empr = dao.buscarEmprestimoPorCodigoLivro(livro);
+		Emprestimo empr = fachada.buscarEmprestimoPorCodigoLivro(livro);
 		
 		return empr;
 	}

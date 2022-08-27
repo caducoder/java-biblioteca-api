@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.biblioteca.dao.ClienteDAO;
+import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.dao.MovimentacaoDAO;
 import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.model.Movimentacao;
@@ -16,45 +17,42 @@ import br.com.biblioteca.utils.TiposMovimentacao;
 public class ClienteService {
 
 	@Inject
-	private ClienteDAO dao;
-	
-	@Inject
-	private MovimentacaoDAO mvtDao;
+	private DAOFacade fachada;
 	
 	public void cadastrarCliente(Cliente cliente) throws Exception {
-		dao.cadastrar(cliente);
+		fachada.cadastrarCliente(cliente);
 		Movimentacao mvt = new Movimentacao(null, cliente.getId(), null, TiposMovimentacao.CADASTRO_CLIENTE, LocalDateTime.now());
 		
-		mvtDao.registrar(mvt);
+		fachada.registrarMovimentacao(mvt);
 	}
 	
 	public List<Cliente> listarClientes() {
-		return dao.listar();
+		return fachada.listarCliente();
 	}
 	
 	public Cliente buscarPorCpf(String cpf) throws Exception {
-		return dao.buscarPorCpf(cpf);
+		return fachada.buscarClientePorCpf(cpf);
 	}
 
 	public void remover(Long id) {
-		dao.remover(id);
+		fachada.removerCliente(id);
 		Movimentacao mvt = new Movimentacao(null, id, null, TiposMovimentacao.EXCLUSAO_CLIENTE, LocalDateTime.now());
 		
-		mvtDao.registrar(mvt);
+		fachada.registrarMovimentacao(mvt);
 	}
 	
 	public Cliente buscarPorId(Long id) {
-		return dao.buscarPorId(id);
+		return fachada.buscarClientePorId(id);
 	}
 
 	public void alterar(Cliente nCliente) {
-		dao.alterar(nCliente);
+		fachada.alterarCliente(nCliente);
 		Movimentacao mvt = new Movimentacao(null, nCliente.getId(), null, TiposMovimentacao.ALTERACAO_CLIENTE, LocalDateTime.now());
 		
-		mvtDao.registrar(mvt);
+		fachada.registrarMovimentacao(mvt);
 	}
 
 	public Long contarClientes() {
-		return dao.contarClientes();
+		return fachada.quantidadeDeClientes();
 	}
 }

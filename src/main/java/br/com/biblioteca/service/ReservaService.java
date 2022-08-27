@@ -6,8 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.biblioteca.dao.MovimentacaoDAO;
-import br.com.biblioteca.dao.ReservaDAO;
+import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.model.Livro;
 import br.com.biblioteca.model.Movimentacao;
@@ -18,16 +17,13 @@ import br.com.biblioteca.utils.TiposMovimentacao;
 public class ReservaService {
 	
 	@Inject
-	private ReservaDAO dao;
-	
-	@Inject
-	private MovimentacaoDAO mvtDao;
+	private DAOFacade fachada;
 	
 	@Inject
 	private ClienteService clienteService;
 	
 	public void salvarReserva(Reserva reserva) throws Exception {
-		Long qtdReservas = dao.contarReservasPorCpf(reserva.getReservadoPorCpf());
+		Long qtdReservas = fachada.quantidadeDeReservasPorCpf(reserva.getReservadoPorCpf());
 		
 		if(qtdReservas > 4) {
 			throw new Exception("Limite de reservas online atingido.");
@@ -35,8 +31,8 @@ public class ReservaService {
 		
 		Movimentacao mvt = new Movimentacao(null, clienteService.buscarPorCpf(reserva.getReservadoPorCpf()).getId(), reserva.getLivro().getId(), TiposMovimentacao.RESERVA, LocalDateTime.now());
 
-		mvtDao.registrar(mvt);
-		dao.salvar(reserva);
+		fachada.registrarMovimentacao(mvt);
+		fachada.salvarReserva(reserva);
 	}
 
 	public boolean verificarReserva(Cliente cl, Livro livro) {
@@ -46,19 +42,19 @@ public class ReservaService {
 	}
 	
 	public List<Reserva> buscarReservasPorCpf(String cpf) {
-		return dao.buscarReservasPorCpf(cpf);
+		return fachada.buscarReservasPorCpf(cpf);
 	}
 	
 	public Reserva buscarReservaPeloLivro(Livro livro) {
-		return dao.buscarReservaPeloLivro(livro);
+		return fachada.buscarReservaPeloLivro(livro);
 	}
 	
 	public void removerReserva(Livro livro) {
-		dao.removerReserva(buscarReservaPeloLivro(livro));
+		fachada.removerReserva(buscarReservaPeloLivro(livro));
 	}
 
 	public Long contarReservas() {
-		return dao.contarReservasTotal();
+		return fachada.quantidadeDeReservas();
 	}
 	
 	
