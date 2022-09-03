@@ -29,7 +29,6 @@ public class Emprestimo {
 	private Long id;
 	
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name="cliente_id", nullable=false)
 	private Cliente cliente;
 	

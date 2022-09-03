@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -18,7 +19,7 @@ public class Cliente extends Usuario {
 	public Cliente() {
 	}
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
 	private List<Emprestimo> emprestimos = new ArrayList<Emprestimo>();
 	
