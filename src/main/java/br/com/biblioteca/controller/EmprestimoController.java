@@ -1,5 +1,7 @@
 package br.com.biblioteca.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import javax.ws.rs.GET;
@@ -18,12 +20,13 @@ public class EmprestimoController {
 
 	@Inject
 	private EmprestimoService emprestimoService;
-	
+
 	@GET
-	//@Secured
+	// @Secured
 	@Path("{idCliente: [0-9]*}/{codigoLivro}")
 	@Produces(value = MediaType.TEXT_PLAIN)
-	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente, @PathParam("codigoLivro") String codigoLivro) {
+	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente,
+			@PathParam("codigoLivro") String codigoLivro) {
 		try {
 			emprestimoService.realizarEmprestimo(idCliente, codigoLivro);
 			return Response.ok("Empréstimo realizado com sucesso.").build();
@@ -32,24 +35,34 @@ public class EmprestimoController {
 			return Response.status(403).entity(e.getMessage()).build();
 		}
 	}
-	
+
 	@GET
 	@Path("{codigoLivro}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarEmprestimoPorCodigoLivro(@PathParam("codigoLivro") String codLivro) {
-		
+
 		try {
 			Emprestimo empr = emprestimoService.buscarPorCodigoLivro(codLivro);
-			
+
 			return Response.ok(empr).build();
 		} catch (Exception e) {
 			return Response.status(404).entity("Empréstimo não encontrado.").build();
 		}
-		
 	}
-	
+
 	@GET
-	//@Secured
+	@Path("cliente/{id}")
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public Response buscarEmprestimosPorCliente(@PathParam("id") Long idCliente) {
+
+		List<Emprestimo> emprestimos = emprestimoService.buscarEmprestimoPorCliente(idCliente);
+
+		return Response.ok(emprestimos).build();
+
+	}
+
+	@GET
+	// @Secured
 	@Path("devolucao/{codigoLivro}")
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response realizarDevolucao(@PathParam("codigoLivro") String codigoLivro) {
@@ -60,23 +73,22 @@ public class EmprestimoController {
 			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
-	
+
 	@GET
-	//@Secured
+	// @Secured
 	@Path("renovar/{codigoLivro}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response renovarEmprestimo(@PathParam("codigoLivro") String codigoLivro) {
 		Emprestimo emprRenovado = emprestimoService.renovarEmprestimo(codigoLivro);
-		
+
 		return Response.ok(emprRenovado).build();
 	}
-	
+
 	@GET
 	@Path("/quantidade")
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response quantidadeDeEmprestimos() {
 		return Response.ok(emprestimoService.contarEmprestimos()).build();
 	}
-	
-	
+
 }

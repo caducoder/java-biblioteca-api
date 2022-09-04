@@ -1,10 +1,13 @@
 package br.com.biblioteca.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.model.Emprestimo;
 import br.com.biblioteca.model.Livro;
 
@@ -36,5 +39,11 @@ public class EmprestimoDAO {
 		String jpql = "SELECT e FROM Emprestimo e WHERE e.livro =:livro";
 		
 		return em.createQuery(jpql, Emprestimo.class).setParameter("livro", livro).getSingleResult();
+	}
+	
+	public List<Emprestimo> buscarPorCliente(Cliente cliente) {
+		String jpql = "SELECT e FROM Emprestimo e WHERE e.cliente =:cliente";
+		
+		return em.createQuery(jpql, Emprestimo.class).setParameter("cliente", cliente).getResultList();
 	}
 }

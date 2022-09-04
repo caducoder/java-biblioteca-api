@@ -2,6 +2,7 @@ package br.com.biblioteca.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -49,7 +50,6 @@ public class EmprestimoService {
 			Emprestimo emprestimo = new Emprestimo();
 			
 			livro.setEstadoLivro(EstadoLivro.EMPRESTADO);
-			emprestimo.setNomeCliente(cl.getNome());
 			emprestimo.setLivro(livro);
 			emprestimo.setEmprestadoEm(LocalDate.now());
 			emprestimo.setDataDevolucao(LocalDate.now().plusDays(15));
@@ -93,6 +93,12 @@ public class EmprestimoService {
 		Emprestimo empr = fachada.buscarEmprestimoPorCodigoLivro(livro);
 		
 		return empr;
+	}
+	
+	public List<Emprestimo> buscarEmprestimoPorCliente(Long idCliente) {
+		Cliente cl = clienteService.buscarPorId(idCliente);
+		
+		return fachada.buscarEmprestimoPorCliente(cl);
 	}
 
 }

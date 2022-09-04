@@ -32,9 +32,6 @@ public class Emprestimo {
 	@JoinColumn(name="cliente_id", nullable=false)
 	private Cliente cliente;
 	
-	@Column(name="nome_cliente")
-	private String nomeCliente;
-	
 	@OneToOne
 	@JoinColumn(name="livro_id")
 	private Livro livro;
@@ -89,14 +86,6 @@ public class Emprestimo {
 
 	public void setDataDevolucao(LocalDate dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
-	}
-
-	public String getNomeCliente() {
-		return nomeCliente;
-	}
-	
-	public void setNomeCliente(String nome) {
-		this.nomeCliente = nome;
 	}
 	
 	@Override

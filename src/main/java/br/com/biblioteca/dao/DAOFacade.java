@@ -170,6 +170,10 @@ public class DAOFacade {
 		return emprestimoDAO.buscarPorCodigoLivro(livro);
 	}
 	
+	public List<Emprestimo> buscarEmprestimoPorCliente(Cliente cliente) {
+		return emprestimoDAO.buscarPorCliente(cliente);
+	}
+	
 	/*==== FINANCEIRO ====*/
 	
 	public void salvarFinanca(FinanceiroForm fin) {

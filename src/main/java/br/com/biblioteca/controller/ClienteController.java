@@ -33,7 +33,6 @@ public class ClienteController {
 		} catch (Exception e) {
 			return Response.status(403).entity(e.getMessage()).build();
 		}
-		
 	}
 	
 	@GET
@@ -90,7 +89,6 @@ public class ClienteController {
 		} catch (Exception e) {
 			return Response.status(400).entity(e.getMessage()).build();
 		}
-		
 	}
 	
 	@DELETE
@@ -100,6 +98,5 @@ public class ClienteController {
 		clienteService.remover(id);
 		return Response.ok().build();
 	}
-	
 	
 }
