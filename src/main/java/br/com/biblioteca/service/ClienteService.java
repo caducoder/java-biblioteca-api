@@ -7,11 +7,11 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.biblioteca.dao.ClienteDAO;
-import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.dao.MovimentacaoDAO;
 import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.utils.TiposMovimentacao;
+import facade.DAOFacade;
 
 @Stateless
 public class ClienteService {
@@ -19,14 +19,14 @@ public class ClienteService {
 	@Inject
 	private DAOFacade fachada;
 	
-	public void cadastrarCliente(Cliente cliente) throws Exception {
+	public void cadastrar(Cliente cliente) throws Exception {
 		fachada.cadastrarCliente(cliente);
 		Movimentacao mvt = new Movimentacao(null, cliente.getId(), null, TiposMovimentacao.CADASTRO_CLIENTE, LocalDateTime.now());
 		
 		fachada.registrarMovimentacao(mvt);
 	}
 	
-	public List<Cliente> listarClientes() {
+	public List<Cliente> listar() {
 		return fachada.listarCliente();
 	}
 	

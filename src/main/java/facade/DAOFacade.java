@@ -1,10 +1,18 @@
-package br.com.biblioteca.dao;
+package facade;
 
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import br.com.biblioteca.dao.AdminDAO;
+import br.com.biblioteca.dao.BibliotecarioDAO;
+import br.com.biblioteca.dao.ClienteDAO;
+import br.com.biblioteca.dao.EmprestimoDAO;
+import br.com.biblioteca.dao.FinanceiroDAO;
+import br.com.biblioteca.dao.LivroDAO;
+import br.com.biblioteca.dao.MovimentacaoDAO;
+import br.com.biblioteca.dao.ReservaDAO;
 import br.com.biblioteca.model.Administrador;
 import br.com.biblioteca.model.Bibliotecario;
 import br.com.biblioteca.model.Cliente;

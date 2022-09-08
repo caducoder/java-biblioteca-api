@@ -7,18 +7,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.com.biblioteca.service.ReservaService;
+import facade.ServiceFacade;
 
 @Path("/reservas")
 public class ReservaController {
 
 	@Inject
-	private ReservaService reservaService;
+	private ServiceFacade fachadaService;
 	
 	@GET
 	@Path("/quantidade")
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response quantidadeDeReservas() {
-		return Response.ok(reservaService.contarReservas()).build();
+		return Response.ok(fachadaService.quantidadeDeReservas()).build();
 	}
 }

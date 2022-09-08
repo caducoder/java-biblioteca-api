@@ -5,10 +5,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.model.Administrador;
 import br.com.biblioteca.model.Usuario;
 import br.com.biblioteca.utils.CryptUtil;
+import facade.DAOFacade;
 
 @Stateless
 public class AdminService {
@@ -31,7 +31,7 @@ public class AdminService {
 		return false;
 	}
 	
-	public List<Administrador> listarAdmins() {
+	public List<Administrador> listar() {
 		return fachada.listarAdmin();
 	}
 

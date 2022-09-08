@@ -7,7 +7,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.dao.EmprestimoDAO;
 import br.com.biblioteca.dao.MovimentacaoDAO;
 import br.com.biblioteca.model.Cliente;
@@ -16,6 +15,7 @@ import br.com.biblioteca.model.Livro;
 import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.utils.EstadoLivro;
 import br.com.biblioteca.utils.TiposMovimentacao;
+import facade.DAOFacade;
 
 @Stateless
 public class EmprestimoService {
@@ -35,13 +35,13 @@ public class EmprestimoService {
 		Livro livro = livroService.buscarLivroPorCodigo(codigoLivro);
 		
 		if(livro.getEstadoLivro() == EstadoLivro.EMPRESTADO) {
-			throw new Exception("Livro j√° est√° emprestado.");
+			throw new Exception("Livro j· est· emprestado.");
 		}
 		
 		boolean estaReservado = livro.getEstadoLivro() == EstadoLivro.RESERVADO;
 		//verifica se livro est√° reservado, se sim, verifica se foi esse cliente que reservou
 		if (estaReservado && !reservaService.verificarReserva(cl, livro)) {
-			throw new Exception("Livro est√° reservado para outra pessoa.");
+			throw new Exception("Livro est· reservado para outra pessoa.");
 		} else {
 			if(estaReservado) {
 				//remove reserva j√° que o cliente fez o emprestimo
@@ -65,7 +65,7 @@ public class EmprestimoService {
 		Livro lvr = livroService.buscarLivroPorCodigo(codigoLivro);
 		Emprestimo empr = lvr.getEmprestimo();
 		
-		if(empr == null) throw new Exception("N√£o foi encontrado empr√©stimo deste livro.");
+		if(empr == null) throw new Exception("N„o foi encontrado emprÈstimo deste livro.");
 		
 		empr.getCliente().getEmprestimos().remove(empr);
 		lvr.setEstadoLivro(EstadoLivro.DISPONIVEL);
@@ -75,7 +75,7 @@ public class EmprestimoService {
 		fachada.removerEmprestimo(empr);
 	}
 
-	public Emprestimo renovarEmprestimo(String codigoLivro) {
+	public Emprestimo renovar(String codigoLivro) {
 		Livro lvr = livroService.buscarLivroPorCodigo(codigoLivro);
 		Emprestimo empr = lvr.getEmprestimo();
 		
@@ -95,7 +95,7 @@ public class EmprestimoService {
 		return empr;
 	}
 	
-	public List<Emprestimo> buscarEmprestimoPorCliente(Long idCliente) {
+	public List<Emprestimo> buscarPeloCliente(Long idCliente) {
 		Cliente cl = clienteService.buscarPorId(idCliente);
 		
 		return fachada.buscarEmprestimoPorCliente(cl);

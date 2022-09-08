@@ -12,15 +12,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.Cliente;
-import br.com.biblioteca.service.ClienteService;
+import facade.ServiceFacade;
 
 @Path("/clientes")
 public class ClienteController {
 	
 	@Inject
-	private ClienteService clienteService;
+	private ServiceFacade fachadaService;
 	
 	@POST
 	//@Secured
@@ -28,7 +27,7 @@ public class ClienteController {
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response cadastrarCliente(Cliente cliente) {
 		try {
-			clienteService.cadastrarCliente(cliente);
+			fachadaService.cadastrarCliente(cliente);
 			return Response.status(201).entity("Cliente cadastrado com sucesso").build();
 		} catch (Exception e) {
 			return Response.status(403).entity(e.getMessage()).build();
@@ -39,14 +38,14 @@ public class ClienteController {
 	//@Secured
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listarClientes() {
-		return Response.ok(clienteService.listarClientes()).build();
+		return Response.ok(fachadaService.listarCliente()).build();
 	}
 	
 	@GET
 	@Path("/quantidade")
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response quantidadeDeClientes() {
-		return Response.ok(clienteService.contarClientes()).build();
+		return Response.ok(fachadaService.quantidadeDeClientes()).build();
 	}
 	
 	@GET
@@ -56,7 +55,7 @@ public class ClienteController {
 	public Response buscarPorCpf(@PathParam("cpf") String cpf) {
 		Cliente cl;
 		try {
-			cl = clienteService.buscarPorCpf(cpf);
+			cl = fachadaService.buscarClientePeloCPF(cpf);
 			
 			return Response.ok(cl).build();
 		} catch (Exception e) {
@@ -69,7 +68,7 @@ public class ClienteController {
 	@Path("/cl/{id}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorId(@PathParam("id") Long id) {
-		Cliente cl = clienteService.buscarPorId(id);
+		Cliente cl = fachadaService.buscarClientePeloID(id);
 		
 		if(cl != null) {
 			return Response.ok(cl).build();
@@ -84,7 +83,7 @@ public class ClienteController {
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response alterarCliente(Cliente nCliente) {
 		try {
-			clienteService.alterar(nCliente);
+			fachadaService.alterarCliente(nCliente);
 			return Response.ok("Cliente atualizado com sucesso.").build();
 		} catch (Exception e) {
 			return Response.status(400).entity(e.getMessage()).build();
@@ -95,7 +94,7 @@ public class ClienteController {
 	//@Secured
 	@Path("{id}")
 	public Response removerCliente(@PathParam("id") Long id) {
-		clienteService.remover(id);
+		fachadaService.removerCliente(id);
 		return Response.ok().build();
 	}
 	

@@ -6,12 +6,12 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.model.Livro;
 import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.model.Reserva;
 import br.com.biblioteca.utils.TiposMovimentacao;
+import facade.DAOFacade;
 
 @Stateless
 public class ReservaService {

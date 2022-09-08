@@ -14,12 +14,13 @@ import javax.ws.rs.core.Response;
 import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.Bibliotecario;
 import br.com.biblioteca.service.BibliotecarioService;
+import facade.ServiceFacade;
 
 @Path("/bibliotecarios")
 public class BibliotecarioController {
 	
 	@Inject
-	private BibliotecarioService bibliotecarioService;
+	private ServiceFacade fachadaService;
 	
 	@POST
 	//@Secured
@@ -27,7 +28,7 @@ public class BibliotecarioController {
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response cadastrarBibliotecario(Bibliotecario bibliotecario) {
 		try {
-			bibliotecarioService.cadastrar(bibliotecario);
+			fachadaService.cadastrarBibliotecario(bibliotecario);
 			return Response.status(201).entity("Funcionário cadastrado com sucesso!").build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,7 +40,7 @@ public class BibliotecarioController {
 	//@Secured
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listarBibliotecarios() {
-		return Response.ok(bibliotecarioService.listar()).build();
+		return Response.ok(fachadaService.listarBibliotecarios()).build();
 	}
 	
 	@GET
@@ -47,7 +48,7 @@ public class BibliotecarioController {
 	@Path("{cpf}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorCpf(@PathParam("cpf") String cpf) {
-		Bibliotecario cl = bibliotecarioService.buscarPeloCpf(cpf);
+		Bibliotecario cl = fachadaService.buscarBibliotecarioPeloCPF(cpf);
 		
 		if(cl == null) {
 			return Response.status(404).build();
@@ -60,7 +61,7 @@ public class BibliotecarioController {
 	//@Secured
 	@Path("{id}")
 	public Response removerBibliotecario(@PathParam("id") Long id) {
-		bibliotecarioService.remover(id);
+		fachadaService.removerBibliotecario(id);
 		
 		return Response.ok().build();
 	}

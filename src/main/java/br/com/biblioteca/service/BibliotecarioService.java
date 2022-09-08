@@ -6,12 +6,12 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.model.Bibliotecario;
 import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.model.Usuario;
 import br.com.biblioteca.utils.CryptUtil;
 import br.com.biblioteca.utils.TiposMovimentacao;
+import facade.DAOFacade;
 
 @Stateless
 public class BibliotecarioService {

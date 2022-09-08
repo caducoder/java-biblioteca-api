@@ -3,7 +3,6 @@ package br.com.biblioteca.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -11,15 +10,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.Emprestimo;
-import br.com.biblioteca.service.EmprestimoService;
+import facade.ServiceFacade;
 
 @Path("/emprestimo")
 public class EmprestimoController {
 
 	@Inject
-	private EmprestimoService emprestimoService;
+	private ServiceFacade fachadaService;
 
 	@GET
 	// @Secured
@@ -28,7 +26,7 @@ public class EmprestimoController {
 	public Response realizarEmprestimo(@PathParam("idCliente") Long idCliente,
 			@PathParam("codigoLivro") String codigoLivro) {
 		try {
-			emprestimoService.realizarEmprestimo(idCliente, codigoLivro);
+			fachadaService.realizarEmprestimo(idCliente, codigoLivro);
 			return Response.ok("Empréstimo realizado com sucesso.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -42,7 +40,7 @@ public class EmprestimoController {
 	public Response buscarEmprestimoPorCodigoLivro(@PathParam("codigoLivro") String codLivro) {
 
 		try {
-			Emprestimo empr = emprestimoService.buscarPorCodigoLivro(codLivro);
+			Emprestimo empr = fachadaService.buscarEmprestimoPeloCodigoLivro(codLivro);
 
 			return Response.ok(empr).build();
 		} catch (Exception e) {
@@ -55,7 +53,7 @@ public class EmprestimoController {
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarEmprestimosPorCliente(@PathParam("id") Long idCliente) {
 
-		List<Emprestimo> emprestimos = emprestimoService.buscarEmprestimoPorCliente(idCliente);
+		List<Emprestimo> emprestimos = fachadaService.buscarEmprestimosPeloCliente(idCliente);
 
 		return Response.ok(emprestimos).build();
 
@@ -67,7 +65,7 @@ public class EmprestimoController {
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response realizarDevolucao(@PathParam("codigoLivro") String codigoLivro) {
 		try {
-			emprestimoService.devolverLivro(codigoLivro);
+			fachadaService.realizarDevolucao(codigoLivro);
 			return Response.ok().entity("Devolução registrada com sucesso.").build();
 		} catch (Exception e) {
 			return Response.status(404).entity(e.getMessage()).build();
@@ -79,7 +77,7 @@ public class EmprestimoController {
 	@Path("renovar/{codigoLivro}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response renovarEmprestimo(@PathParam("codigoLivro") String codigoLivro) {
-		Emprestimo emprRenovado = emprestimoService.renovarEmprestimo(codigoLivro);
+		Emprestimo emprRenovado = fachadaService.renovarEmprestimo(codigoLivro);
 
 		return Response.ok(emprRenovado).build();
 	}
@@ -88,7 +86,7 @@ public class EmprestimoController {
 	@Path("/quantidade")
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response quantidadeDeEmprestimos() {
-		return Response.ok(emprestimoService.contarEmprestimos()).build();
+		return Response.ok(fachadaService.quantidadeDeEmprestimos()).build();
 	}
 
 }

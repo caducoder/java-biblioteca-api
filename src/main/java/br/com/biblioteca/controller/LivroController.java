@@ -13,86 +13,83 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import br.com.biblioteca.Secured;
 import br.com.biblioteca.model.Livro;
-import br.com.biblioteca.service.LivroService;
-import br.com.biblioteca.service.ReservaService;
+import facade.ServiceFacade;
 
 @Path("/livros")
 public class LivroController {
-	
+
 	@Inject
-	private LivroService livroService;
+	private ServiceFacade fachadaService;
 
 	@POST
-	//@Secured
+	// @Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response cadastrarLivro(Livro livro) {
 		try {
-			livroService.cadastrar(livro);
+			fachadaService.cadastrarLivro(livro);
 			return Response.status(201).entity("Livro cadastrado com sucesso!").build();
 		} catch (Exception e) {
 			return Response.status(403).entity(e.getMessage()).build();
 		}
 	}
-	
+
 	@GET
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listarLivros() {
-		return Response.ok(livroService.listar()).build();
+		return Response.ok(fachadaService.listarLivros()).build();
 	}
 
 	@GET
 	@Path("/quantidade")
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response quantidadeDeLivros() {
-		return Response.ok(livroService.quantidade()).build();
+		return Response.ok(fachadaService.quantidadeDeLivros()).build();
 	}
-	
+
 	@GET
 	@Path("{codigo}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response buscarPorCodigo(@PathParam("codigo") String codigo) {
-		Livro lvr = livroService.buscarLivroPorCodigo(codigo);
-		
-		if(lvr == null) {
+		Livro lvr = fachadaService.buscarLivroPeloCodigo(codigo);
+
+		if (lvr == null) {
 			return Response.status(404).build();
 		}
-		
+
 		return Response.ok(lvr).build();
 	}
-	
+
 	@GET
 	@Path("{idLivro: [0-9]*}/{cpf}")
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response reservarLivro(@PathParam("idLivro") Long idLivro, @PathParam("cpf") String cpf) {
 		try {
-			livroService.reservar(idLivro, cpf);
-			
+			fachadaService.reservarLivro(idLivro, cpf);
+
 			return Response.ok("Livro reservado com sucesso!").build();
 		} catch (Exception e) {
 			return Response.status(Status.FORBIDDEN).entity(e.getMessage()).build();
 		}
 	}
-	
+
 	@PUT
-	//@Secured
+	// @Secured
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response alterarLivro(Livro nLivro) {
-		livroService.alterar(nLivro);
+		fachadaService.alterarLivro(nLivro);
 		return Response.ok().build();
 	}
-	
+
 	@DELETE
-	//@Secured
+	// @Secured
 	@Path("{idLivro}")
 	public Response removerLivro(@PathParam("idLivro") Long idLivro) {
 		try {
-			livroService.remover(idLivro);
+			fachadaService.removerLivro(idLivro);
 			return Response.ok().build();
 		} catch (Exception e) {
 			return Response.status(400).entity(e.getMessage()).build();
 		}
-		
 	}
 }

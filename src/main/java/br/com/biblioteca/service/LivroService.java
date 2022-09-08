@@ -8,13 +8,13 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.biblioteca.dao.DAOFacade;
 import br.com.biblioteca.model.Cliente;
 import br.com.biblioteca.model.Livro;
 import br.com.biblioteca.model.Movimentacao;
 import br.com.biblioteca.model.Reserva;
 import br.com.biblioteca.utils.EstadoLivro;
 import br.com.biblioteca.utils.TiposMovimentacao;
+import facade.DAOFacade;
 
 @Stateless
 public class LivroService {
@@ -63,7 +63,7 @@ public class LivroService {
 	public void remover(Long idLivro) {
 		fachada.removerLivro(idLivro);
 		
-		Movimentacao mvt = new Movimentacao(null, null, null, TiposMovimentacao.EXCLUSAO_LIVRO, LocalDateTime.now());
+		Movimentacao mvt = new Movimentacao(null, null, idLivro, TiposMovimentacao.EXCLUSAO_LIVRO, LocalDateTime.now());
 		
 		fachada.registrarMovimentacao(mvt);
 	}
@@ -87,7 +87,6 @@ public class LivroService {
 	}
 
 	public Long quantidade() {
-		System.out.println("CONTEUDO FACHADA: "+ fachada);
 		return fachada.quantidadeDeLivros();
 	}
 

@@ -15,10 +15,9 @@ import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.biblioteca.service.AdminService;
-import br.com.biblioteca.service.BibliotecarioService;
 import br.com.biblioteca.utils.AuthResponse;
 import br.com.biblioteca.utils.Credentials;
+import facade.ServiceFacade;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -29,10 +28,7 @@ public class LoginController {
 	public static final Key CHAVE = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 	@Inject
-	private BibliotecarioService bibliotecarioService;
-	
-	@Inject
-	private AdminService adminService;
+	private ServiceFacade fachadaService;
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -44,9 +40,9 @@ public class LoginController {
 			
 			// adiciona o nome do usuário na resposta
 			if(codigo == 2200) {
-				authParams.setUsername(bibliotecarioService.buscarNomePeloEmail(credenciais.getEmail()));
+				authParams.setUsername(fachadaService.buscarNomeBibliotecarioPeloEmail(credenciais.getEmail()));
 			} else {
-				authParams.setUsername(adminService.buscarNomePorEmail(credenciais.getEmail()));
+				authParams.setUsername(fachadaService.buscarNomeAdministradorPeloEmail(credenciais.getEmail()));
 			}
 			
 			// adiciona na resposta o código equivalente a função do usuario: admin ou bibliotecario
@@ -67,10 +63,10 @@ public class LoginController {
 	// método que verifica se o usuário é bibliotecario ou administrador, e retorna o código equivalente
 	private int authenticate(String email, String senha) throws Exception {
 		
-		if(bibliotecarioService.verificaLogin(email, senha)) {
+		if(fachadaService.verificaLoginBibliotecario(email, senha)) {
 			return 2200;// código para bibliotecario
 		}
-		if(adminService.verificaLogin(email, senha)) {
+		if(fachadaService.verificaLoginAdministrador(email, senha)) {
 			return 2205;// código para admin
 		}
 		//caso não encontre nenhum dos dois

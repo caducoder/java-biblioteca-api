@@ -9,13 +9,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.com.biblioteca.model.Administrador;
-import br.com.biblioteca.service.AdminService;
+import facade.ServiceFacade;
 
 @Path("/admin")
 public class AdminController {
 
 	@Inject
-	private AdminService adminService;
+	private ServiceFacade fachadaService;
 	
 	@POST
 	//@Secure
@@ -23,7 +23,7 @@ public class AdminController {
 	@Produces(value = MediaType.TEXT_PLAIN)
 	public Response cadastrarAdmin(Administrador admin) {
 		try {
-			adminService.cadastrar(admin);
+			fachadaService.cadastrarAdministrador(admin);
 			return Response.status(201).entity("Usuário cadastrado com sucesso!").build();
 		} catch (Exception e) {
 			e.printStackTrace();
